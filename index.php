@@ -1,4 +1,4 @@
 <?php
-header("Location: /proyecto/irlanalytical.github.io/index.html");
+header("Location: /irlanalytical.github.io/index.html");
 exit();
 ?>
