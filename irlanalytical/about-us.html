@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+    <title>¿Quiénes Somos? - IRS ANALYTICAL</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        /* Estilos adicionales para la página ¿Quiénes Somos? */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/IRL_O.png');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .value-card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-member img {
+            transition: transform 0.5s ease;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        .team-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover .team-overlay {
+            transform: translateY(0);
+        }
+
+        .counter-item {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .counter-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .counter-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .testimonial-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #0d6efd;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            width: 50%;
+            padding: 0 40px;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+
+        .timeline-year {
+            position: absolute;
+            top: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #0d6efd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year {
+            right: -40px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Navbar Start -->
+    <div class="container-fluid nav-bar bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
+            <a href="index.html"><img src="img/logo.png" height=80px></a>
+            <a href="" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
+                <!--<img class="" src="img/logo.png" width=40%>-->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav me-auto">
+                    <a href="index.html" class="nav-item nav-link">Inicio</a>
+                    <a href="about.html" class="nav-item nav-link">Productos</a>
+                    <a href="about-us.html" class="nav-item nav-link active">¿Quiénes Somos?</a>
+                    <a href="service.html" class="nav-item nav-link">Servicios</a>
+                    <a href="team.html" class="nav-item nav-link">Equipos</a>
+                    <div class="nav-item dropdown">
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Hero Section -->
+    <div class="container-fluid p-0">
+        <div class="hero-section">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-3 text-white animated slideInDown mb-4">¿Quiénes Somos?</h1>
+                        <p class="fs-5 fw-medium text-white mb-4 pb-2">Más de una década de excelencia en soluciones
+                            analíticas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Section End -->
+
+    <!-- About Section -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h1 class="mb-4">Nuestra Historia</h1>
+                    <p class="mb-1">IRS ANALYTICAL SERVICE
+                        es una empresa mexicana dedicada a impartir y proporcionar capacitaciones, servicios al sector
+                        analítico, público y privado; así como la distribución de equipos de laboratorio, insumos y
+                        acondicionamiento de susinstalaciones. Proveemos soluciones analíticas con tecnología de punta y
+                        productos de la más alta calidad al sector industrial,académico y de investigación, en
+                        laboratorios de:</p><br>
+                        
+                       <ul>Control de calidad</ul>
+                       <ul>Desarrollo tecnológico</ul>
+                       <ul>Producción</ul>
+                       <ul>Investigación científica</ul>
+                       <ul>Docencia</ul>
+                       <ul>Entre otros</ul>
+                    <p class="mb-4">A lo largo de los años, hemos expandido nuestras operaciones para incluir tres
+                        divisiones especializadas: IRS ANALYTICAL, VACUUM SYSTEMS y TUBE & FITTINGS, cada una dedicada a
+                        ofrecer soluciones de vanguardia para diferentes necesidades del laboratorio moderno.</p>
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 btn-lg-square bg-primary rounded-circle">
+                                    <i class="fa fa-check text-white"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0">Equipos de Primera Calidad</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 btn-lg-square bg-primary rounded-circle">
+                                    <i class="fa fa-check text-white"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0">Soporte Técnico Especializado</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative h-100 wow fadeInUp" data-wow-delay="0.5s">
+                        <img class="img-fluid rounded w-100" src="img/about-company.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+
+    <!-- Mission Vision Values -->
+    <div class="container-xxl py-5 bg-light">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-5">Nuestra Filosofía</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="value-card bg-white rounded p-4 text-center h-100">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                            style="width: 80px; height: 80px;">
+                            <i class="fa fa-bullseye fa-2x text-white"></i>
+                        </div>
+                        <h4 class="mb-3">Misión</h4>
+                        <p class="mb-0">Proveer soluciones analíticas integrales de la más alta calidad, contribuyendo
+                            al avance científico y tecnológico de nuestros clientes mediante equipos innovadores y
+                            servicios especializados.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="value-card bg-white rounded p-4 text-center h-100">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                            style="width: 80px; height: 80px;">
+                            <i class="fa fa-eye fa-2x text-white"></i>
+                        </div>
+                        <h4 class="mb-3">Visión</h4>
+                        <p class="mb-0">Ser el socio estratégico preferido en soluciones analíticas en México,
+                            reconocidos por nuestra excelencia, innovación y compromiso con el éxito de nuestros
+                            clientes.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="value-card bg-white rounded p-4 text-center h-100">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                            style="width: 80px; height: 80px;">
+                            <i class="fa fa-heart fa-2x text-white"></i>
+                        </div>
+                        <h4 class="mb-3">Valores</h4>
+                        <ul class="list-unstyled mb-0 text-start">
+                            <li class="mb-2"><i class="fa fa-check text-primary me-2"></i>Integridad en todas nuestras
+                                acciones</li>
+                            <li class="mb-2"><i class="fa fa-check text-primary me-2"></i>Compromiso con la excelencia
+                            </li>
+                            <li class="mb-2"><i class="fa fa-check text-primary me-2"></i>Innovación constante</li>
+                            <li class="mb-2"><i class="fa fa-check text-primary me-2"></i>Orientación al cliente</li>
+                            <li><i class="fa fa-check text-primary me-2"></i>Trabajo en equipo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mission Vision Values End -->
+
+    <!-- Timeline Section -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-5">Nuestra Trayectoria</h1>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="timeline-year">2010</div>
+                    <div class="timeline-content">
+                        <h4>Fundación de IRS ANALYTICAL</h4>
+                        <p>Iniciamos operaciones especializándonos en cromatografía y equipos de laboratorio analítico.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="timeline-year">2013</div>
+                    <div class="timeline-content">
+                        <h4>Expansión de Productos</h4>
+                        <p>Ampliamos nuestro catálogo para incluir sistemas de vacío y accesorios especializados.</p>
+                    </div>
+                </div>
+                <div class="timeline-item wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="timeline-year">2016</div>
+                    <div class="timeline-content">
+                        <h4>Lanzamiento de VACUUM SYSTEMS</h4>
+                        <p>Creamos nuestra división especializada en soluciones de vacío para laboratorios e industria.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="timeline-year">2019</div>
+                    <div class="timeline-content">
+                        <h4>Nueva División: TUBE & FITTINGS</h4>
+                        <p>Iniciamos operaciones de nuestra división de tubos y conexiones para aplicaciones críticas.
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="timeline-item wow fadeInUp" data-wow-delay="0.9s">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h4>Reconocimiento Nacional</h4>
+                        <p>Recibimos el premio a la Excelencia en Proveeduría para Laboratorios por parte de la ANL.</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- Timeline Section End -->
+
+    <!-- Team Section -->
+    <!-- <div class="container-xxl py-5 bg-light">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-5">Nuestro Equipo Directivo</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="team-member">
+                        <img class="img-fluid w-100" src="img/team-1.jpg" alt="">
+                        <div class="team-overlay">
+                            <h4 class="text-white mb-0">Ing. Roberto Sánchez</h4>
+                            <p class="text-white">Director General</p>
+                            <p class="text-white">Más de 15 años de experiencia en el sector de equipos analíticos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-member">
+                        <img class="img-fluid w-100" src="img/team-2.jpg" alt="">
+                        <div class="team-overlay">
+                            <h4 class="text-white mb-0">Dra. Isabel Mendoza</h4>
+                            <p class="text-white">Directora Técnica</p>
+                            <p class="text-white">PhD en Química Analítica con especialización en cromatografía.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="team-member">
+                        <img class="img-fluid w-100" src="img/team-3.jpg" alt="">
+                        <div class="team-overlay">
+                            <h4 class="text-white mb-0">Lic. Carlos Ramírez</h4>
+                            <p class="text-white">Director Comercial</p>
+                            <p class="text-white">Especialista en desarrollo de mercados y relaciones con clientes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Team Section End -->
+
+    <!-- Stats Section -->
+    <!-- <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="counter-item text-center">
+                        <div class="counter-number">12+</div>
+                        <h5>Años de Experiencia</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="counter-item text-center">
+                        <div class="counter-number">500+</div>
+                        <h5>Clientes Satisfechos</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="counter-item text-center">
+                        <div class="counter-number">50+</div>
+                        <h5>Marcas Representadas</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="counter-item text-center">
+                        <div class="counter-number">3</div>
+                        <h5>Divisiones Especializadas</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Stats Section End -->
+
+    <!-- Testimonials Section -->
+    <div class="container-xxl py-5 bg-light">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-5">Lo Que Dicen Nuestros Clientes</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.3s">
+                <div class="testimonial-card bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- <img class="flex-shrink-0 rounded-circle" src="img/testimonial-1.jpg" -->
+                            <!-- style="width: 60px; height: 60px;"> -->
+                        <div class="ms-3">
+                            <!-- <h5 class="mb-1">Dr. Miguel Torres</h5>
+                            <p class="m-0">Laboratorio de Investigación UNAM</p> -->
+                        </div>
+                    </div>
+                    <p class="mb-0">"IRS ANALYTICAL ha sido nuestro proveedor confiable durante más de 5 años. Su
+                        soporte técnico es excepcional y siempre encuentran la solución perfecta para nuestras
+                        necesidades."</p>
+                </div>
+                <div class="testimonial-card bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- <img class="flex-shrink-0 rounded-circle" src="img/testimonial-2.jpg" -->
+                            <!-- style="width: 60px; height: 60px;"> -->
+                        <div class="ms-3">
+                            <!-- <h5 class="mb-1">Ing. Laura González</h5>
+                            <p class="m-0">Farmacéutica Innovadora S.A.</p> -->
+                        </div>
+                    </div>
+                    <p class="mb-0">"La calidad de los equipos y el servicio postventa de IRS ANALYTICAL supera nuestras
+                        expectativas. Son verdaderos socios estratégicos para nuestro laboratorio de control de
+                        calidad."</p>
+                </div>
+                <div class="testimonial-card bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- <img class="flex-shrink-0 rounded-circle" src="img/testimonial-3.jpg" -->
+                            <!-- style="width: 60px; height: 60px;"> -->
+                        <div class="ms-3">
+                            <!-- <h5 class="mb-1">Q.F.B. Ana Rodríguez</h5>
+                            <p class="m-0">Centro de Análisis Clínicos</p> -->
+                        </div>
+                    </div>
+                    <p class="mb-0">"Hemos trabajado con IRS ANALYTICAL en varios proyectos y siempre demuestran
+                        profesionalismo y conocimiento técnico. Su asesoría nos ha ayudado a optimizar nuestros
+                        procesos."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonials Section End -->
+
+    <!-- CTA Section -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="bg-primary rounded p-5">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="text-white mb-3">¿Listo para trabajar con nosotros?</h1>
+                        <p class="text-white mb-0">Contáctanos hoy mismo y descubre cómo podemos ayudarte a alcanzar tus
+                            objetivos.</p>
+                    </div>
+                    <div class="col-lg-6 text-lg-end">
+                        <a class="btn btn-dark py-3 px-5" href="contact.html">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CTA Section End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Dirección</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sor Juana Inés de la Cruz, CP 52140, San
+                        Mateo, Edo. de México</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>8137080819, 5613477010, 7229063890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>cotizaciones@irsmx.com  o  contacto@irsmx.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Marcas</h4>
+                    <a class="btn btn-link" href="../irlanalytical/index.html">IRS ANALYTICAL</a>
+                    <a class="btn btn-link" href="../vacumSystem/service.html">VACUUM SYSTEMS</a>
+                    <a class="btn btn-link" href="../tube&Fittings/service.html">TUBE & FITTINGS</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">IRS ANALYTICAL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/8137080819?text=Hola+¿me puede dar información?" target="_blank" class="whatsapp-btn">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <script>
+        // Inicializar carousel de testimonios
+        $('.testimonial-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: false,
+            dots: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 2
+                },
+                1200: {
+                    items: 3
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

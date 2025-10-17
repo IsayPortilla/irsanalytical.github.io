@@ -82,9 +82,7 @@
         </div>
     </div>
     <!-- Page Header End -->
-    <!-- Team Start -->
-<!-- Page Header End -->
-
+    
 <!-- Product Catalog with Sidebar Start -->
 <div class="container-xxl py-5">
     <div class="container">
@@ -100,89 +98,30 @@
                 <div class="row mb-4">
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar productos...">
-                            <button class="btn btn-primary" type="button">Buscar</button>
+                            <input type="text" class="form-control" placeholder="Buscar productos..." id="searchInput">
+                            <button class="btn btn-primary" type="button" onclick="searchProducts()" style="background-color: rgb(247, 163, 52);">Buscar</button>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <select class="form-select">
-                            <option selected>Ordenar por</option>
-                            <option>Precio: Menor a Mayor</option>
-                            <option>Precio: Mayor a Menor</option>
-                            <option>Nombre A-Z</option>
+                        <select class="form-select" id="sortSelect" onchange="sortProducts()">
+                            <option value="name">Nombre A-Z</option>
+                            <option value="price-asc">Precio: Menor a Mayor</option>
+                            <option value="price-desc">Precio: Mayor a Menor</option>
                         </select>
                     </div>
                 </div>
                 
                 <!-- Product Grid -->
-                <div class="row g-4">
-                    <!-- Product Items (reduced to 4 for example) -->
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s"  >
-                        <div class="product-item bg-light rounded overflow-hidden">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="img/bv_vs2.jpg" alt="Bomba">
-                            </div>
-                            <div class="text-center p-4" >
-                                <h5 class="fw-bold mb-2">Bomba</h5>
-                                <span class="text-primary fw-bold">$$$</span>
-                                <div class="mt-3">
-                                    <a class="btn btn-primary px-3" href="https://api.whatsapp.com/send?phone=5576574684&text=Hola,%20estoy%20interesado%20en%20sus%20servicios." style="background-color: rgb(247, 163, 52);">
-                                        <i class="fab fa-whatsapp me-1" ></i> Cotizar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s"  >
-                        <div class="product-item bg-light rounded overflow-hidden">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="img/bv_vs2.jpg" alt="Bomba">
-                            </div>
-                            <div class="text-center p-4" >
-                                <h5 class="fw-bold mb-2">Bomba</h5>
-                                <span class="text-primary fw-bold">$$$</span>
-                                <div class="mt-3">
-                                    <a class="btn btn-primary px-3" href="https://api.whatsapp.com/send?phone=5576574684&text=Hola,%20estoy%20interesado%20en%20sus%20servicios." style="background-color: rgb(247, 163, 52);">
-                                        <i class="fab fa-whatsapp me-1" ></i> Cotizar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s"  >
-                        <div class="product-item bg-light rounded overflow-hidden">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="img/bv_vs2.jpg" alt="Bomba">
-                            </div>
-                            <div class="text-center p-4" >
-                                <h5 class="fw-bold mb-2">Bomba</h5>
-                                <span class="text-primary fw-bold">$$$</span>
-                                <div class="mt-3">
-                                    <a class="btn btn-primary px-3" href="https://api.whatsapp.com/send?phone=5576574684&text=Hola,%20estoy%20interesado%20en%20sus%20servicios." style="background-color: rgb(247, 163, 52);">
-                                        <i class="fab fa-whatsapp me-1" ></i> Cotizar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- More product items would go here... -->
+                <div class="row g-4" id="productGrid">
+                    <!-- Los productos se generarán dinámicamente con JavaScript -->
                 </div>
                 
                 <!-- Pagination -->
                 <div class="row mt-5">
                     <div class="col-12">
                         <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                </li>
+                            <ul class="pagination justify-content-center" id="pagination">
+                                <!-- La paginación se generará dinámicamente -->
                             </ul>
                         </nav>
                     </div>
@@ -196,11 +135,11 @@
                     <div class="sidebar-widget mb-4">
                         <h4 class="fw-bold mb-3">Categorías</h4>
                         <ul class="list-unstyled">
-                            <li class="mb-2"><a href="#" class="text-dark">Tuberías Industriales</a></li>
+                            <li class="mb-2"><a href="#" class="text-dark">Bombas de Vacío</a></li>
+                            <li class="mb-2"><a href="#" class="text-dark">Kits de Servicio</a></li>
+                            <li class="mb-2"><a href="#" class="text-dark">Refacciones</a></li>
                             <li class="mb-2"><a href="#" class="text-dark">Accesorios</a></li>
-                            <li class="mb-2"><a href="#" class="text-dark">Válvulas</a></li>
-                            <li class="mb-2"><a href="#" class="text-dark">Conexiones</a></li>
-                            <li><a href="#" class="text-dark">Herramientas</a></li>
+                            <li><a href="#" class="text-dark">Consumibles</a></li>
                         </ul>
                     </div>
                     
@@ -209,11 +148,14 @@
                         <h4 class="fw-bold mb-3">Filtrar por Precio</h4>
                         <div class="price-range">
                             <div class="mb-3">
-                                <input type="range" class="form-range" min="0" max="10000" step="100" id="priceRange">
+                                <input type="range" class="form-range" min="0" max="300" step="10" id="priceRange" onchange="filterByPrice()">
                             </div>
                             <div class="d-flex justify-content-between">
                                 <span>$0</span>
-                                <span>$10,000</span>
+                                <span>$300</span>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <small id="priceDisplay">Rango: $0 - $300</small>
                             </div>
                         </div>
                     </div>
@@ -223,19 +165,19 @@
                         <h4 class="fw-bold mb-3">Productos Destacados</h4>
                         <div class="featured-product mb-3">
                             <div class="d-flex">
-                                <img src="img/service-1.jpg" alt="Producto 1" class="img-fluid me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                <img src="img/bv_vs2.jpg" alt="Kit Major Service" class="img-fluid me-3" style="width: 80px; height: 80px; object-fit: cover;">
                                 <div>
-                                    <h6 class="mb-1">CROMA 1</h6>
-                                    <p class="text-primary mb-0">$$$</p>
+                                    <h6 class="mb-1">Kit Major Service</h6>
+                                    <p class="text-primary mb-0">Desde $225.00</p>
                                 </div>
                             </div>
                         </div>
                         <div class="featured-product mb-3">
                             <div class="d-flex">
-                                <img src="img/service-1.jpg" alt="Producto 2" class="img-fluid me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                <img src="img/bv_vs2.jpg" alt="Kit Mantenimiento" class="img-fluid me-3" style="width: 80px; height: 80px; object-fit: cover;">
                                 <div>
-                                    <h6 class="mb-1">CROMA 2</h6>
-                                    <p class="text-primary mb-0">$$$</p>
+                                    <h6 class="mb-1">Kit Mantenimiento</h6>
+                                    <p class="text-primary mb-0">$270.00</p>
                                 </div>
                             </div>
                         </div>
@@ -244,9 +186,8 @@
                     <!-- Contact Info -->
                     <div class="sidebar-widget mt-4">
                         <h4 class="fw-bold mb-3">Contacto</h4>
-                        <p><i class="fas fa-phone-alt me-2"></i> 55 7657 4684</p>
-                        <p><i class="fas fa-envelope me-2"></i> iejemplo@ejemplo.com</p>
-
+                        <p><i class="fas fa-phone-alt me-2"></i> 813-708-0819</p>
+                        <p><i class="fas fa-envelope me-2"></i> direccion@irsanalyticalservice.com</p>
                     </div>
                 </div>
             </div>
@@ -254,10 +195,7 @@
     </div>
 </div>
 <!-- Product Catalog with Sidebar End -->
-    <!-- Team End -->
         
-  
-    <!-- About End -->
     <!-- Footer Start -->
     <div class="container-fluid text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" style="background-color: rgb(247, 163, 52)">
         <div class="container py-5">
@@ -289,34 +227,201 @@
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         &copy; <a class="border-bottom" href="#">IRS ANALYTICAL</a>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 <!-- Footer End -->
 
-	    <a href="https://wa.me/8137080819?text=Hola+¿me puede dar información?" target=”_blank” class="whatsapp-btn">
-        <i class="bi bi-whatsapp"></i>
-      </a>  
+<a href="https://wa.me/8137080819?text=Hola+¿me puede dar información?" target="_blank" class="whatsapp-btn">
+    <i class="bi bi-whatsapp"></i>
+</a>
 
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 
+<!-- Product Catalog Script -->
+<script>
+    // Datos de productos - Kits de servicio
+    const products = [
+        { id: 1, name: "Kit Major Service Edwards", model: "65201131RV3", stock: 6, price: 275.00, brand: "Vacuum Pump Supply", category: "Kits de Servicio" },
+        { id: 2, name: "Kit Major Service Edwards", model: "65201131RV5", stock: 2, price: 225.00, brand: "Vacuum Pump Supply", category: "Kits de Servicio" },
+        { id: 3, name: "Kit Major Service Edwards", model: "65201131RV8", stock: 2, price: 260.00, brand: "Vacuum Pump Supply", category: "Kits de Servicio" },
+        { id: 4, name: "Kit Major Service Edwards", model: "65201131RV12", stock: 2, price: 297.00, brand: "Vacuum Pump Supply", category: "Kits de Servicio" },
+        { id: 5, name: "Kit Manteinance, ED, E2M0.7/1/1.5", model: "37101800ED", stock: 2, price: 270.00, brand: "Vacuum Pump Supply", category: "Kits de Mantenimiento" },
+        { id: 6, name: "Kit Shaft Sleeve RPT Edwards", model: "65201136", stock: 4, price: 75.00, brand: "Global Vacuum Products", category: "Refacciones" }
+    ];
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    let currentPage = 1;
+    const productsPerPage = 6;
+    let filteredProducts = [...products];
+    let currentPriceRange = 300;
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    // Función para mostrar productos
+    function displayProducts() {
+        const productGrid = document.getElementById('productGrid');
+        productGrid.innerHTML = '';
+
+        const startIndex = (currentPage - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+        if (productsToShow.length === 0) {
+            productGrid.innerHTML = `
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning">
+                        <h5>No se encontraron productos</h5>
+                        <p>Intenta con otros criterios de búsqueda</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        productsToShow.forEach(product => {
+            const productCard = `
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="product-item bg-light rounded overflow-hidden">
+                        <div class="position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="img/bv_vs2.jpg" alt="${product.name}">
+                            <div class="product-overlay">
+                                <span class="badge bg-${product.stock > 0 ? 'success' : 'danger'} position-absolute top-0 start-0 m-2">${product.stock} en stock</span>
+                                <span class="badge bg-info position-absolute top-0 end-0 m-2">${product.brand}</span>
+                            </div>
+                        </div>
+                        <div class="text-center p-4">
+                            <h6 class="fw-bold mb-1" style="font-size: 0.9rem;">${product.name}</h6>
+                            <p class="text-muted mb-1" style="font-size: 0.8rem;">Modelo: ${product.model}</p>
+                            <p class="text-muted mb-1" style="font-size: 0.8rem;">Categoría: ${product.category}</p>
+                            <span class="text-primary fw-bold">$${product.price.toFixed(2)} USD</span>
+                            <div class="mt-3">
+                                <a class="btn btn-primary px-3" href="https://api.whatsapp.com/send?phone=8137080819&text=Hola, estoy interesado en: ${encodeURIComponent(product.name)} - Modelo: ${product.model} - Precio: $${product.price}" style="background-color: rgb(247, 163, 52); border: none;">
+                                    <i class="fab fa-whatsapp me-1"></i> Cotizar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            productGrid.innerHTML += productCard;
+        });
+
+        updatePagination();
+    }
+
+    // Función para actualizar paginación
+    function updatePagination() {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+        if (totalPages <= 1) return;
+
+        // Botón anterior
+        pagination.innerHTML += `
+            <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Anterior</a>
+            </li>
+        `;
+
+        // Números de página
+        for (let i = 1; i <= totalPages; i++) {
+            pagination.innerHTML += `
+                <li class="page-item ${i === currentPage ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                </li>
+            `;
+        }
+
+        // Botón siguiente
+        pagination.innerHTML += `
+            <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Siguiente</a>
+            </li>
+        `;
+    }
+
+    // Función para cambiar página
+    function changePage(page) {
+        currentPage = page;
+        displayProducts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Función para buscar productos
+    function searchProducts() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        filteredProducts = products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.model.toLowerCase().includes(searchTerm) ||
+            product.brand.toLowerCase().includes(searchTerm) ||
+            product.category.toLowerCase().includes(searchTerm)
+        );
+        currentPage = 1;
+        displayProducts();
+    }
+
+    // Función para ordenar productos
+    function sortProducts() {
+        const sortValue = document.getElementById('sortSelect').value;
+        
+        filteredProducts.sort((a, b) => {
+            switch(sortValue) {
+                case 'name':
+                    return a.name.localeCompare(b.name);
+                case 'price-asc':
+                    return a.price - b.price;
+                case 'price-desc':
+                    return b.price - a.price;
+                default:
+                    return 0;
+            }
+        });
+        
+        currentPage = 1;
+        displayProducts();
+    }
+
+    // Función para filtrar por precio
+    function filterByPrice() {
+        const priceRange = document.getElementById('priceRange');
+        currentPriceRange = parseInt(priceRange.value);
+        
+        document.getElementById('priceDisplay').textContent = `Rango: $0 - $${currentPriceRange}`;
+        
+        filteredProducts = products.filter(product => product.price <= currentPriceRange);
+        currentPage = 1;
+        displayProducts();
+    }
+
+    // Inicializar catálogo
+    document.addEventListener('DOMContentLoaded', function() {
+        displayProducts();
+        
+        // Permitir búsqueda con Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+        
+        // Inicializar display de precio
+        document.getElementById('priceDisplay').textContent = `Rango: $0 - $${currentPriceRange}`;
+    });
+</script>
+
 </body>
-
 </html>
