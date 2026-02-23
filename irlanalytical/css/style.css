@@ -81,7 +81,7 @@
     position: relative;
     padding: 0 4.75rem;
     transition: .5s;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 .nav-bar.sticky-top {
@@ -181,7 +181,7 @@
 @media (max-width: 768px) {
     .header-carousel .owl-carousel-item {
         position: relative;
-        min-height: 500px;
+        min-height: 600px;
     }
     
     .header-carousel .owl-carousel-item img {
@@ -635,3 +635,13 @@
       transform: scale(1);
     }
   }
+#sugerencias-busqueda {
+    /* Forzamos que el fondo sea blanco opaco para que no se trasluzca lo de abajo */
+    background-color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Si el buscador está arriba del nav-bar en el código, el padre debe permitir el flujo */
+header, .top-bar, .col-lg-4 {
+    overflow: visible !important;
+}

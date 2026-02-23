@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+    <title>IRS ANALYTICAL</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="row align-items-start bg-primary text-light">
+        <div class="col text-center">
+            <p class="fs-6 fs-md-5 fs-lg-4"><b>COMPRAS INMEDIATAS</b> en nuestras
+                ofertas. Da click <a href="specials.html" class="text-light pa"><b>AQUÍ</b></a></p>
+        </div>
+        <div class="col text-center">
+            <i class="fas fa-phone-alt"> </i> Contáctanos 7229063890
+        </div>
+    </div>
+    <!--BANNER SECUNDARIO-->
+    <div class="row align-items-center bg-white text-primary">
+        <div class="col text-center">
+            <a href="index.html"><img src="img/logo.png" height="100px" /></a>
+        </div>
+
+
+        <div class="col-lg-4 position-relative" style="z-index: 1060;">
+            <div class="input-group">
+                <input type="text" id="input-busqueda" class="form-control" placeholder="Buscar productos..."
+                    aria-label="Buscar" autocomplete="off">
+                <button class="btn btn-outline-primary" type="button" id="btn-buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div id="sugerencias-busqueda" class="list-group position-absolute w-100 shadow-lg d-none"
+                style="z-index: 9999; top: 100%; left: 0; background-color: #ffffff !important; border: 1px solid #dee2e6; border-radius: 0 0 8px 8px;">
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-3 text-center">
+            <a href="login.html" class="text-decoration-none text-primary">
+                <i class="fas fa-user-circle fa-lg"></i>
+                <span class="ms-1 d-none d-md-inline">Ingresar / Mi cuenta</span>
+            </a>
+        </div>
+        <!-- <div class="col-lg-2 text-center">
+            <a href="#" class="text-decoration-none text-primary position-relative">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="ms-1 d-none d-md-inline">Carrito</span>
+
+                </span>
+            </a>
+        </div> -->
+    </div>
+    <div class="container-fluid nav-bar bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
+            <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
+                <h1 class="text-primary m-0">IRS</h1>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav me-auto" id="main-nav-container">
+
+                    <a href="specials.html" class="nav-item nav-link text-danger">Ofertas Especiales</a>
+                    <a href="about-us.html" class="nav-item nav-link ">Nosotros</a>
+                    <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- <div class="container-fluid nav-bar bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
+            <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
+                <h1 class="text-primary m-0">IRS</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav me-auto">
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            BioBase
+                        </a>
+                        <div class="dropdown-menu border-0 m-0 shadow-sm" id="navbar-submarcas">
+                            <div class="p-3 text-muted">Cargando categorías...</div>
+                        </div>
+                    </div>
+                    <a href="specials.html" class="nav-item nav-link text-danger">Ofertas Especiales</a>
+                    <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </div> -->
+    <!-- Navbar End -->
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 mb-5">
+        <div class="owl-carousel header-carousel position-relative">
+            <div class="owl-carousel-item position-relative" style="height: auto;">
+                <img class="img-fluid h-100" src="img/ofertas.png" alt="">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                    style="background: rgba(0, 0, 0, .4);">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+
+    <!-- OFERTAS -->
+    <!-- <div class="container-fluid py-5 px-4 px-lg-0">
+        <div class="row g-0">
+            <div class="col-lg-3 d-none d-lg-flex">
+                <div class="d-flex align-items-center justify-content-center bg-primary w-100 h-100">
+                    <h1 class="display-3 text-white m-0" style="transform: rotate(-90deg);">¡Ofertas!</h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-9">
+                <div class="ms-lg-5 ps-lg-5">
+                    <div class="text-center text-lg-start wow fadeInUp" data-wow-delay="0.1s">
+
+                        <h1 class="mb-5">¡Ofertas imperdibles para tu laboratorio!</h1>
+                    </div>
+                    <div class="owl-carousel service-carousel position-relative wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- OFERTAS -->
+    <!-- About Start -->
+    <!-- <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <img src="img/logo.png" height=20%>
+                    <h1 class="mb-4">Calidad y confiabilidad para tu laboratorio</h1>
+                    <p class="mb-4">Revisa nuestro catálogo de productos que se adecue mejor a tus necesidades</p>
+                    <div class="bg-primary d-flex align-items-center p-4 mt-5">
+                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-white"
+                            style="width: 60px; height: 60px;">
+                            <i class="fa fa-phone-alt fa-2x text-primary"></i>
+                        </div>
+                        <div class="ms-3">
+                            <p class="fs-5 fw-medium mb-2 text-white">¡Contáctanos!</p>
+                            <h3 class="m-0 text-secondary">Por Whatsapp<a
+                                    href="https://api.whatsapp.com/send?phone=&text=Hola,%20estoy%20interesado%20en%20sus%20servicios."
+                                    class="m-0 text-secondary"> ¡Haz click aqui!</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 pt-4" style="min-height: 500px;">
+                    <div class="position-relative h-100 wow fadeInUp" data-wow-delay="0.5s">
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/IRS3.jpeg"
+                            style="object-fit: cover; padding: 0 0 50px 100px;" alt="">
+                        <img class="position-absolute start-0 bottom-0 img-fluid bg-white pt-2 pe-2 w-50 h-50"
+                            src="img/IRS2.jpeg" style="object-fit: cover;" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <a href="https://wa.me/7229063890?text=Hola+¿me puede dar información?" target=”_blank” class="whatsapp-btn">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+    <!-- About End -->
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Dirección</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sor Juana Inés de la Cruz, CP 52140,
+                        San
+                        Mateo, Edo. de México</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>5613477010, 7229063890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>cotizaciones@irsmx.com o contacto@irsmx.com
+                    </p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Marcas</h4>
+                    <a class="btn btn-link" href="../irlanalytical/index.html">IRS ANALYTICAL</a>
+                    <a class="btn btn-link" href="../vacumSystem/service.html">VACUUM SYSTEMS</a>
+                    <a class="btn btn-link" href="../tube&Fittings/service.html">TUBE & FITTINGS</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">IRS ANALYTICAL</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <!-- <a href="https://wa.me/7226817326" target="_blank" class="btn-lg btn-primary btn-lg-square rounded-0 float-left">
+        <i class="bi bi-whatsapp" style="font-size: 24px;"></i> 
+    </a>-->
+    <!--<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top">
+        <i class="bi bi-arrow-up"></i></a>-->
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script type="module" src="../firebase.js"></script>
+    <script type="module" src="../auth_handler.js"></script>
+</body>
+
+</html>

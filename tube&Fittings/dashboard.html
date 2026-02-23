@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRS Analytical | Panel de Control</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <style>
+        :root { --irs-blue: #002347; --irs-light: #f4f7f9; }
+        body { background-color: var(--irs-light); font-family: 'Inter', sans-serif; }
+        
+        /* Sidebar */
+        .sidebar { min-height: 100vh; background: var(--irs-blue); color: white; width: 260px; position: fixed; z-index: 100; }
+        .main-content { margin-left: 260px; padding: 30px; }
+        
+        /* Cards & Selects */
+        .card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .nav-label { font-size: 0.75rem; font-weight: 700; color: #6c757d; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        
+        /* Buttons */
+        .btn-irs { background: var(--irs-blue); color: white; border-radius: 8px; }
+        .btn-irs:hover { background: #003366; color: white; }
+        .btn-action-node { padding: 2px 6px; font-size: 0.8rem; }
+        
+        /* Table */
+        .table thead { background: #f8f9fa; }
+        .badge-oferta { background-color: #ff4757; color: white; }
+    </style>
+</head>
+<body>
+        <div class="row align-items-center bg-white text-primary">
+        <div class="col text-center">
+            <a href="index.html"><img src="img/logo.png" height="100px" /></a>
+        </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar productos..." aria-label="Buscar">
+                <button class="btn btn-outline-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-3 text-center">
+            <a href="login.html" class="text-decoration-none text-primary">
+                <i class="fas fa-user-circle fa-lg"></i>
+                <span class="ms-1 d-none d-md-inline">Ingresar / Mi cuenta</span>
+            </a>
+        </div>
+        
+    </div>
+
+    <div class="sidebar p-4 shadow">
+        <div class="text-center mb-4">
+            <h4 class="fw-bold">IRS ANALYTICAL</h4>
+            <small class="opacity-50">Sistema de Inventario</small>
+        </div>
+        <hr>
+        <nav class="nav flex-column">
+            <a class="nav-link text-white active" href="#"><i class="bi bi-grid-1x2-fill me-2"></i> Dashboard</a>
+            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-box-seam me-2"></i> Productos</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold m-0">Catálogo</h2>
+            <button class="btn btn-irs px-4" onclick="adminNodo('empresa', 'crear')">
+                <i class="bi bi-plus-lg me-2"></i>Nueva Empresa
+            </button>
+        </header>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="nav-label">1. Empresa</span>
+                        <button class="btn btn-outline-secondary btn-action-node" onclick="adminNodo('empresa', 'editar')"><i class="bi bi-pencil"></i></button>
+                    </div>
+                    <select id="sel-empresa" class="form-select border-0 bg-light mt-2"></select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="nav-label">2. Submarca</span>
+                        <div>
+                            <button class="btn btn-outline-secondary btn-action-node" onclick="adminNodo('submarca', 'editar')"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-outline-primary btn-action-node" onclick="adminNodo('submarca', 'crear')"><i class="bi bi-plus"></i></button>
+                        </div>
+                    </div>
+                    <select id="sel-submarca" class="form-select border-0 bg-light mt-2"></select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="nav-label">3. Categoría</span>
+                        <div>
+                            <button class="btn btn-outline-secondary btn-action-node" onclick="adminNodo('categoria', 'editar')"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-outline-primary btn-action-node" onclick="adminNodo('categoria', 'crear')"><i class="bi bi-plus"></i></button>
+                        </div>
+                    </div>
+                    <select id="sel-categoria" class="form-select border-0 bg-light mt-2"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card overflow-hidden">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
+                <h5 class="fw-bold m-0 text-dark">Gestión de Productos</h5>
+                <button class="btn btn-success btn-sm px-3" id="btn-nuevo-prod" disabled onclick="abrirModalProd()">
+                    <i class="bi bi-plus-circle me-1"></i> Agregar Producto
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Producto</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-prods">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalProd" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold">Detalle del Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="form-prod">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="p-id">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Nombre</label>
+                            <input type="text" id="p-nombre" class="form-control" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label fw-bold small">Precio ($)</label>
+                                <input type="number" step="0.01" id="p-precio" class="form-control" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label fw-bold small">Stock</label>
+                                <input type="number" id="p-stock" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-check form-switch bg-light p-3 rounded border">
+                            <input class="form-check-input ms-0 me-2" type="checkbox" id="p-oferta">
+                            <label class="form-check-label fw-bold text-danger">En Oferta</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="submit" class="btn btn-irs w-100 py-2">Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../dashboard.js"></script>
+</body>
+</html>

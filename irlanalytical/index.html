@@ -36,6 +36,7 @@
 </head>
 
 <body>
+
     <!-- Spinner Start -->
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -43,48 +44,115 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
+    <div class="row align-items-start bg-primary text-light">
+        <div class="col text-center">
+            <p class="fs-6 fs-md-5 fs-lg-4"><b>COMPRAS INMEDIATAS</b> en nuestras
+                ofertas. Da click <a href="specials.html" class="text-light pa"><b>AQUÍ</b></a></p>
+        </div>
+        <div class="col text-center">
+            <i class="fas fa-phone-alt"> </i> Contáctanos 7229063890
+        </div>
+    </div>
+    <!--BANNER SECUNDARIO-->
+    <div class="row align-items-center bg-white text-primary">
+        <div class="col text-center">
+            <a href="index.html"><img src="img/logo.png" height="100px" /></a>
+        </div>
+
+
+        <div class="col-lg-4 position-relative" style="z-index: 1060;">
+            <div class="input-group">
+                <input type="text" id="input-busqueda" class="form-control" placeholder="Buscar productos..."
+                    aria-label="Buscar" autocomplete="off">
+                <button class="btn btn-outline-primary" type="button" id="btn-buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div id="sugerencias-busqueda" class="list-group position-absolute w-100 shadow-lg d-none"
+                style="z-index: 9999; top: 100%; left: 0; background-color: #ffffff !important; border: 1px solid #dee2e6; border-radius: 0 0 8px 8px;">
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-3 text-center">
+            <a href="login.html" class="text-decoration-none text-primary">
+                <i class="fas fa-user-circle fa-lg"></i>
+                <span class="ms-1 d-none d-md-inline">Ingresar / Mi cuenta</span>
+            </a>
+        </div>
+        <!-- <div class="col-lg-2 text-center">
+            <a href="#" class="text-decoration-none text-primary position-relative">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="ms-1 d-none d-md-inline">Carrito</span>
+
+                </span>
+            </a>
+        </div> -->
+    </div>
     <div class="container-fluid nav-bar bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
-            <a href="index.html"><img src="img/logo.png" height=80px></a>
-            <a href="" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
-                <!--<img class="" src="img/logo.png" width=40%>-->
+            <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
+                <h1 class="text-primary m-0">IRS</h1>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav me-auto" id="main-nav-container">
+
+                    <a href="specials.html" class="nav-item nav-link text-danger">Ofertas Especiales</a>
+                    <a href="about-us.html" class="nav-item nav-link ">Nosotros</a>
+                    <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- <div class="container-fluid nav-bar bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
+            <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
+                <h1 class="text-primary m-0">IRS</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav me-auto">
-                    <a href="index.html" class="nav-item nav-link active">Inicio</a>
-                    <a href="about.html" class="nav-item nav-link">Productos</a>
-                    <a href="service.html" class="nav-item nav-link">Servicios</a>
-                    <a href="team.html" class="nav-item nav-link">Equipos</a>
-                    <a href="about-us.html" class="nav-item nav-link">¿Quiénes Somos?</a>
+
                     <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            BioBase
+                        </a>
+                        <div class="dropdown-menu border-0 m-0 shadow-sm" id="navbar-submarcas">
+                            <div class="p-3 text-muted">Cargando categorías...</div>
+                        </div>
                     </div>
+                    <a href="specials.html" class="nav-item nav-link text-danger">Ofertas Especiales</a>
                     <a href="contact.html" class="nav-item nav-link">Contacto</a>
                 </div>
-               <!-- <a href="https://api.whatsapp.com/send?phone= 5576574684&text=Hola,%20estoy%20interesado%20en%20sus%20servicios."
-                    class="btn btn-success" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Chatear por WhatsApp
-                </a>-->
             </div>
         </nav>
-    </div>
+    </div> -->
     <!-- Navbar End -->
-
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
-            <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+            <div class="owl-carousel-item position-relative" style="height: auto;">
+                <img class="img-fluid h-100" src="img/IRS_BANNER.png" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                     style="background: rgba(0, 0, 0, .4);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Equipos de cromatografia
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Equipos de
+                                    cromatografia
                                 </h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Revisa nuestro catálogo de
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Revisa nuestro catálogo
+                                    de
                                     productos</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-2">Los mejores proveedores para tu
                                     laboratorio</p>
@@ -100,9 +168,11 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Las mejores marcas del
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Las mejores marcas
+                                    del
                                     mercado</h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Diferentes productos que se
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Diferentes productos que
+                                    se
                                     adecuan a tus necesidades</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqui en IRS ANALYTICAL</p>
                             </div>
@@ -110,18 +180,42 @@
                     </div>
                 </div>
             </div>
+            <div class="owl-carousel-item position-relative">
+                <a href="">
+                    <img class="img-fluid" src="img/carousel-3.jpg" alt="Ofertas!">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                        style="background: rgba(0, 0, 0, .4);">
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-10 col-lg-8">
+                                    <h5 class="text-white text-uppercase mb-3 animated slideInDown">Revisa
+                                        nuestras
+                                        ofertas</h5>
+                                    <h1 class="display-3 text-white animated slideInDown mb-4">Piezas
+                                        limitadas
+                                        ¡Aprovéchalo!</h1>
+                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqui en IRS ANALYTICAL</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
     <!-- Carousel End -->
-
-
-    <!-- Service Start -->
+    <div class="title text-center text-primary fadeInUp wow">
+        <h1>
+            Conoce nuestras marcas y servicios
+        </h1>
+    </div>
+    <!-- Marcas Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.1s">
                     <div class="overflow-hidden">
-                        <img class="img-fluid w-100 h-100" src="img/logo.png" alt="IRL ANALYTICAL" >
+                        <img class="img-fluid w-100 h-100" src="img/logo.png" alt="IRL ANALYTICAL">
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
                         <h5 class="text-truncate me-3 mb-0">IRS ANALYTICAL</h5>
@@ -135,8 +229,8 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
                         <h5 class="text-truncate me-3 mb-0">TUBE & FITTINGS</h5>
-                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0" href="../tube&Fittings/service.html"><i
-                                class="fa fa-arrow-right"></i></a>
+                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
+                            href="../tube&Fittings/service.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.5s">
@@ -145,8 +239,8 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
                         <h5 class="text-truncate me-3 mb-0">VACUUM SYSTEMS</h5>
-                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0" href="../vacumSystem/service.html"><i
-                                class="fa fa-arrow-right"></i></a>
+                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
+                            href="../vacumSystem/service.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -154,7 +248,74 @@
     </div>
     <!-- Service End -->
 
+    <!-- OFERTAS -->
+    <div class="container-fluid py-5 px-4 px-lg-0">
+        <div class="row g-0">
+            <div class="col-lg-3 d-none d-lg-flex">
+                <div class="d-flex align-items-center justify-content-center bg-primary w-100 h-100">
+                    <h1 class="display-3 text-white m-0" style="transform: rotate(-90deg);">¡Ofertas!</h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-9">
+                <div class="ms-lg-5 ps-lg-5">
+                    <div class="text-center text-lg-start wow fadeInUp" data-wow-delay="0.1s">
 
+                        <h1 class="mb-5">¡Ofertas imperdibles para tu laboratorio!</h1>
+                    </div>
+                    <div class="owl-carousel service-carousel position-relative wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/ofertas.png" style="height: 300px;  align-items: center;" />
+                            </div>
+                        </div>
+                        <!-- <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <img src="img/IRS1.jpeg" style="height: 150px; width: 150px; align-items: center;" />
+                            </div>
+                            <h4 class="mb-3 text-center">Oferta 1
+                            </h4>
+
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-bars text-danger me-2"></i>Precio de lista: $$$</p>
+                            <p class="text-primary fw-medium text-center"><i
+                                    class="fa fa-check text-success me-2"></i>Precio de oferta: $$$</p>
+                            <a href="" target=”_blank” class="btn bg-white text-primary w-100 mt-2">Agregar al carrito<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- OFERTAS -->
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -170,7 +331,9 @@
                         </div>
                         <div class="ms-3">
                             <p class="fs-5 fw-medium mb-2 text-white">¡Contáctanos!</p>
-                            <h3 class="m-0 text-secondary">Por Whatsapp<a href="https://api.whatsapp.com/send?phone=8137080819&text=Hola,%20estoy%20interesado%20en%20sus%20servicios." class="m-0 text-secondary">   ¡Haz click aqui!</a></h3>
+                            <h3 class="m-0 text-secondary">Por Whatsapp<a
+                                    href="https://api.whatsapp.com/send?phone=7229063890&text=Hola,%20estoy%20interesado%20en%20sus%20servicios."
+                                    class="m-0 text-secondary"> ¡Haz click aqui!</a></h3>
                         </div>
                     </div>
                 </div>
@@ -185,9 +348,9 @@
             </div>
         </div>
     </div>
-	    <a href="https://wa.me/8137080819?text=Hola+¿me puede dar información?" target=”_blank” class="whatsapp-btn">
+    <a href="https://wa.me/7229063890?text=Hola+¿me puede dar información?" target=”_blank” class="whatsapp-btn">
         <i class="bi bi-whatsapp"></i>
-      </a>  
+    </a>
     <!-- About End -->
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -195,9 +358,12 @@
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Dirección</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sor Juana Inés de la Cruz, CP 52140, San Mateo, Edo. de México</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>8137080819, 5613477010, 7229063890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>cotizaciones@irsmx.com  o  contacto@irsmx.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sor Juana Inés de la Cruz, CP 52140,
+                        San
+                        Mateo, Edo. de México</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>5613477010, 7229063890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>cotizaciones@irsmx.com o contacto@irsmx.com
+                    </p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -206,7 +372,7 @@
                     </div>
                 </div>
 
-       <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Marcas</h4>
                     <a class="btn btn-link" href="../irlanalytical/index.html">IRS ANALYTICAL</a>
                     <a class="btn btn-link" href="../vacumSystem/service.html">VACUUM SYSTEMS</a>
@@ -229,7 +395,7 @@
 
 
     <!-- Back to Top -->
-  <!-- <a href="https://wa.me/7226817326" target="_blank" class="btn-lg btn-primary btn-lg-square rounded-0 float-left">
+    <!-- <a href="https://wa.me/7226817326" target="_blank" class="btn-lg btn-primary btn-lg-square rounded-0 float-left">
         <i class="bi bi-whatsapp" style="font-size: 24px;"></i> 
     </a>-->
     <!--<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top">
@@ -250,6 +416,8 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script type="module" src="../firebase.js"></script>
+    <script type="module" src="../auth_handler.js"></script>
 </body>
 
 </html>
