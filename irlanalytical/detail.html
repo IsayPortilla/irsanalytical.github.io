@@ -150,8 +150,10 @@
         <div id="content-detalle" class="row g-5 d-none">
             <div class="col-lg-6">
                 <div class="border rounded p-4 text-center bg-white shadow-sm">
-                    <img id="p-imagen" src="" class="img-fluid" style="max-height: 400px; object-fit: contain;">
+                    <img id="p-imagen" src="" alt="" class="img-fluid"
+                        style="max-height: 400px; object-fit: contain;">
                 </div>
+                <div id="p-galeria" class="d-flex flex-wrap gap-2 mt-3"></div>
             </div>
             <div class="col-lg-6">
                 <h1 id="p-nombre" class="display-6 fw-bold"></h1>
@@ -172,6 +174,27 @@
     <script type="module">
         import { db } from "../firebase.js";
         import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { cargarMapeoImagenes, galeriaDeProducto } from "./js/imagenes_productos.js";
+
+        function mostrarGaleria(imagenes, nombre) {
+            const principal = document.getElementById('p-imagen');
+            const galeria = document.getElementById('p-galeria');
+            principal.src = imagenes[0];
+            principal.alt = nombre;
+            galeria.innerHTML = '';
+
+            if (imagenes.length < 2) return;
+            imagenes.forEach((ruta) => {
+                const miniatura = document.createElement('img');
+                miniatura.src = ruta;
+                miniatura.alt = nombre;
+                miniatura.loading = 'lazy';
+                miniatura.className = 'border rounded p-1 bg-white';
+                miniatura.style.cssText = 'width:72px;height:72px;object-fit:contain;cursor:pointer;';
+                miniatura.addEventListener('click', () => { principal.src = ruta; });
+                galeria.appendChild(miniatura);
+            });
+        }
 
         async function cargarDetalle() {
             const params = new URLSearchParams(window.location.search);
@@ -181,14 +204,17 @@
             if (!id || !cat) return;
 
             try {
-                const snapshot = await get(ref(db, `data_productos/${cat}/${id}`));
+                const [snapshot, mapeo] = await Promise.all([
+                    get(ref(db, `data_productos/${cat}/${id}`)),
+                    cargarMapeoImagenes()
+                ]);
                 if (snapshot.exists()) {
                     const data = snapshot.val();
                     document.getElementById('p-nombre').innerText = data.nombre;
                     document.getElementById('p-id').innerText = id;
                     document.getElementById('p-descripcion').innerText = data.descripcion || "Sin descripción disponible.";
                     document.getElementById('p-precio').innerText = (data.precio === "0000" || data.precio === "0") ? "Precio bajo consulta" : `$${data.precio}`;
-                    document.getElementById('p-imagen').src = data.imagen || 'img/croma.jpg';
+                    mostrarGaleria(galeriaDeProducto(mapeo, id, data), data.nombre);
 
                     const msj = encodeURIComponent(`Hola, me interesa el producto: ${data.nombre} (ID: ${id})`);
                     document.getElementById('btn-wa').href = `https://wa.me/7229063890?text=${msj}`;

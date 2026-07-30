@@ -1,0 +1,9 @@
+# Descarga original del scraper (~550 MB). Solo se publica el subconjunto que
+# vive en irlanalytical/img/productos.
+irlanalytical/img/imagenes_biobase/
+
+# El sitio es HTML, CSS y JS nativos: Firebase se carga desde su CDN y no hay
+# dependencias de npm. Si alguna herramienta llega a crear estas rutas, quedan
+# fuera del repositorio.
+node_modules/
+package-lock.json
