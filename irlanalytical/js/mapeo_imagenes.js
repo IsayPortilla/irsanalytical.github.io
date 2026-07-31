@@ -247,12 +247,25 @@ function puntuar(grupos, tokens, idf, numsProducto, numsSlug) {
 /**
  * Construye el mapeo id de producto -> imagenes.
  *
- * @param {Array<{id: string, nombre: string}>} productos equipos de Firebase.
+ * Si un producto trae `imagenCarpeta` (fijada desde el panel) se respeta esa
+ * eleccion y se excluye del emparejamiento automatico, para que su carpeta no
+ * se la lleve otro equipo.
+ *
+ * @param {Array<{id: string, nombre: string, imagenCarpeta?: string}>} productos
  * @param {Object<string, string[]>} indice carpeta -> archivos publicados.
  * @param {string} rutaBase prefijo web de las imagenes.
  */
 export function construirMapeo(productos, indice, rutaBase = 'img/productos') {
-    const carpetas = Object.keys(indice);
+    const manuales = new Map();
+    for (const producto of productos) {
+        if (producto.imagenCarpeta && indice[producto.imagenCarpeta]) {
+            manuales.set(producto.id, producto.imagenCarpeta);
+        }
+    }
+
+    const reservadas = new Set(manuales.values());
+    const automaticos = productos.filter((p) => !manuales.has(p.id));
+    const carpetas = Object.keys(indice).filter((c) => !reservadas.has(c));
     const idf = construirIdf(carpetas);
     const tokensPorCarpeta = new Map();
     const numerosPorCarpeta = new Map();
@@ -262,7 +275,7 @@ export function construirMapeo(productos, indice, rutaBase = 'img/productos') {
     }
 
     // 1. Candidatos: mejores carpetas de cada producto ordenadas por puntaje.
-    const items = productos.map((producto) => {
+    const items = automaticos.map((producto) => {
         const clave = normalizar(producto.nombre);
         let candidatos = [];
 
@@ -310,11 +323,11 @@ export function construirMapeo(productos, indice, rutaBase = 'img/productos') {
     }
 
     const mapeo = {};
-    for (const [id, carpeta] of asignado) {
+    for (const [id, carpeta] of [...manuales, ...asignado]) {
         const archivos = indice[carpeta] || [];
         if (!archivos.length) continue;
         const imagenes = archivos.map((a) => `${rutaBase}/${carpeta}/${a}`);
-        mapeo[id] = { carpeta, imagen: imagenes[0], imagenes };
+        mapeo[id] = { carpeta, imagen: imagenes[0], imagenes, manual: manuales.has(id) };
     }
     return mapeo;
 }

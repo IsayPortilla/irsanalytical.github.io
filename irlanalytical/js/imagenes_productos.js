@@ -20,6 +20,22 @@ export const IMAGEN_POR_DEFECTO = 'img/croma.jpg';
 const CLAVE_CACHE = 'irs:mapeo-imagenes:v1';
 
 let peticion = null;
+let peticionIndice = null;
+
+// El indice lista las carpetas publicadas y sus archivos. El panel lo usa para
+// ofrecer la lista de imagenes disponibles al corregir un producto a mano.
+export function cargarIndiceImagenes() {
+    if (!peticionIndice) {
+        peticionIndice = fetch(RUTA_INDICE)
+            .then((r) => (r.ok ? r.json() : {}))
+            .catch(() => ({}));
+    }
+    return peticionIndice;
+}
+
+export function rutaDeImagen(carpeta, archivo) {
+    return `${RUTA_BASE}/${carpeta}/${archivo}`;
+}
 
 function leerCache(sello) {
     try {
@@ -42,7 +58,7 @@ function guardarCache(sello, mapeo) {
 
 async function calcularMapeo() {
     const [indice, snapshot] = await Promise.all([
-        fetch(RUTA_INDICE).then((r) => (r.ok ? r.json() : {})),
+        cargarIndiceImagenes(),
         get(ref(db, 'data_productos'))
     ]);
 
@@ -51,12 +67,25 @@ async function calcularMapeo() {
         const categorias = snapshot.val();
         for (const idCat of Object.keys(categorias)) {
             for (const [id, info] of Object.entries(categorias[idCat])) {
-                productos.push({ id, categoria: idCat, nombre: info.nombre || '' });
+                productos.push({
+                    id,
+                    categoria: idCat,
+                    nombre: info.nombre || '',
+                    imagenCarpeta: info.imagenCarpeta || ''
+                });
             }
         }
     }
 
-    const sello = `${Object.keys(indice).length}:${productos.length}`;
+    // Las correcciones manuales entran en el sello: si el panel cambia la
+    // carpeta de un producto, la copia guardada deja de servir aunque el
+    // numero de productos y de carpetas siga igual.
+    const manuales = productos
+        .filter((p) => p.imagenCarpeta)
+        .map((p) => `${p.id}=${p.imagenCarpeta}`)
+        .sort()
+        .join(',');
+    const sello = `${Object.keys(indice).length}:${productos.length}:${manuales}`;
     const guardado = leerCache(sello);
     if (guardado) return guardado;
 
@@ -71,6 +100,18 @@ export function cargarMapeoImagenes() {
         peticion = calcularMapeo().catch(() => ({}));
     }
     return peticion;
+}
+
+// El panel lo llama tras cambiar la carpeta de un producto, para no seguir
+// mostrando el emparejamiento anterior.
+export function refrescarMapeoImagenes() {
+    peticion = null;
+    try {
+        sessionStorage.removeItem(CLAVE_CACHE);
+    } catch (e) {
+        // sessionStorage no disponible: no hay nada que limpiar.
+    }
+    return cargarMapeoImagenes();
 }
 
 export function imagenDeProducto(mapeo, idProducto, producto) {

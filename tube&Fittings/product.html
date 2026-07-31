@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Solicitar servicio | VACUUM SYSTEMS</title>
+    <title>Cat&aacute;logo | TUBE &amp; FITTINGS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <link rel="icon" href="img/vs_2.png">
+    <link rel="icon" href="img/TNF_L2.png">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
     <!-- Aviso superior -->
     <div class="row g-0 align-items-center bg-primary text-light py-1">
         <div class="col-12 col-md text-center">
-            <p class="mb-0 small">Bombas de vac&iacute;o, refacciones y servicio t&eacute;cnico. Ver <a href="team.html" class="text-light fw-bold">equipos</a></p>
+            <p class="mb-0 small">Conexiones, tuber&iacute;a e instrumentaci&oacute;n para gases. Ver <a href="product.html" class="text-light fw-bold">cat&aacute;logo</a></p>
         </div>
         <div class="col-12 col-md text-center">
             <p class="mb-0 small"><i class="fas fa-phone-alt me-2"></i>Cont&aacute;ctanos
@@ -58,12 +58,12 @@
     <!-- Logotipo, buscador y cuenta -->
     <div class="row g-0 align-items-center bg-white py-2">
         <div class="col-12 col-lg-4 text-center">
-            <a href="index.html"><img src="img/vs_2.png" alt="VACUUM SYSTEMS" height="90"></a>
+            <a href="index.html"><img src="img/TNF_L2.png" alt="TUBE &amp; FITTINGS" height="90"></a>
         </div>
         <div class="col-12 col-lg-5 position-relative px-3 py-2 py-lg-0" style="z-index: 1060;">
             <div class="input-group">
                 <input type="text" id="input-busqueda" class="form-control" placeholder="Buscar productos..."
-                    aria-label="Buscar productos" autocomplete="off" data-busqueda-destino="team.html">
+                    aria-label="Buscar productos" autocomplete="off" data-busqueda-destino="product.html" data-busqueda-ficha="detail.html" data-busqueda-empresa="TUBE AND FITTINGS">
                 <button class="btn btn-outline-primary" type="button" id="btn-buscar" aria-label="Buscar">
                     <i class="fas fa-search"></i>
                 </button>
@@ -84,15 +84,15 @@
     <div class="container-fluid nav-bar bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
             <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
-                <h1 class="text-primary m-0">VS</h1>
+                <h1 class="text-primary m-0">TNF</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-label="Abrir men&uacute;">
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav me-auto" id="main-nav-container">
-                    <a href="team.html" class="nav-item nav-link">Equipos y refacciones</a>
+                <div class="navbar-nav me-auto" id="main-nav-container" data-menu-empresa="TUBE AND FITTINGS" data-menu-catalogo="product.html">
+                    <a href="product.html" class="nav-item nav-link">Cat&aacute;logo</a>
                     <a href="service.html" class="nav-item nav-link">Servicios</a>
                     <a href="about.html" class="nav-item nav-link">Nosotros</a>
                     <a href="contact.html" class="nav-item nav-link">Contacto</a>
@@ -102,80 +102,39 @@
     </div>
     <!-- Navbar End -->
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header mb-5 py-5">
-        <div class="container">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">Solicitar servicio</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb animated slideInDown">
-                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Inicio</a></li>
-                    <li class="breadcrumb-item text-white active" aria-current="page">Solicitar servicio</li>
-                </ol>
-            </nav>
+    <div class="container-fluid bg-light py-5">
+        <div class="container text-center">
+            <h1 id="titulo-pagina" class="display-5 mb-0">Cat&aacute;logo de productos</h1>
         </div>
     </div>
-    <!-- Page Header End -->
 
-    <!-- Solicitud Start -->
-    <div class="container-xxl pb-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="mb-3">Cu&eacute;ntanos qu&eacute; necesitas</h1>
-                        <p class="text-muted mb-0">Escribe tu solicitud y te respondemos con una propuesta y un
-                            tiempo estimado. Los campos marcados son obligatorios.</p>
-                    </div>
-                    <div class="bg-light p-5 wow fadeInUp" data-wow-delay="0.2s">
-                        <form data-formulario-contacto data-asunto="Nueva solicitud de servicio" novalidate>
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <label for="b-nombre" class="visually-hidden">Nombre</label>
-                                    <input type="text" id="b-nombre" name="nombre" class="form-control border-0"
-                                        placeholder="Nombre" style="height: 55px;" required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="b-email" class="visually-hidden">Correo electr&oacute;nico</label>
-                                    <input type="email" id="b-email" name="email" class="form-control border-0"
-                                        placeholder="Correo electr&oacute;nico" style="height: 55px;" required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="b-servicio" class="visually-hidden">Servicio</label>
-                                    <select id="b-servicio" name="servicio" class="form-select border-0"
-                                        style="height: 55px;" required>
-                                        <option value="">Selecciona un servicio</option>
-                                        <option value="Equipos anal&iacute;ticos">Equipos anal&iacute;ticos</option>
-                                        <option value="Infraestructura de laboratorio">Infraestructura de laboratorio</option>
-                                        <option value="Bombas de vac&iacute;o">Bombas de vac&iacute;o</option>
-                                        <option value="Servicios t&eacute;cnicos">Servicios t&eacute;cnicos</option>
-                                        <option value="Otro">Otro</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="b-fecha" class="visually-hidden">Fecha preferida</label>
-                                    <input type="date" id="b-fecha" name="fecha" class="form-control border-0"
-                                        style="height: 55px;">
-                                </div>
-                                <div class="col-12">
-                                    <label for="b-mensaje" class="visually-hidden">Detalles de la solicitud</label>
-                                    <textarea id="b-mensaje" name="mensaje" class="form-control border-0" rows="5"
-                                        placeholder="Cu&eacute;ntanos qu&eacute; necesitas" required></textarea>
-                                </div>
-                                <!-- Campo trampa contra robots: oculto para las personas. -->
-                                <input type="text" name="website" tabindex="-1" autocomplete="off"
-                                    style="position:absolute;left:-9999px;" aria-hidden="true">
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Enviar solicitud</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <div class="container py-5">
+        <div id="loading-productos" class="text-center p-5">
+            <div class="spinner-border text-primary" role="status"><span class="sr-only">Cargando...</span></div>
+            <p class="mt-2 mb-0">Cargando productos...</p>
+        </div>
+
+        <div class="row g-4" id="contenedor-productos"></div>
+
+        <nav aria-label="P&aacute;ginas del cat&aacute;logo" class="mt-5">
+            <ul class="pagination justify-content-center mb-0" id="paginacion-lista"></ul>
+        </nav>
+
+        <div id="sin-resultados" class="text-center d-none py-5">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h3>No encontramos productos con ese criterio</h3>
+            <a href="product.html" class="btn btn-primary mt-3">Ver todo el cat&aacute;logo</a>
         </div>
     </div>
-    <!-- Solicitud End -->
-                <a href="https://wa.me/7226817326?text=Hola,%20%C2%BFme%20puede%20dar%20informaci%C3%B3n?" target="_blank"
+
+    <script type="module">
+        import { iniciarCatalogo } from "../catalogo.js";
+
+        // Las piezas todavia no tienen fotografia propia dada de alta, asi que
+        // todas muestran la imagen de la marca hasta que se carguen.
+        iniciarCatalogo({ empresa: "TUBE AND FITTINGS", imagen: () => "img/TNF_C2.png" });
+    </script>
+                        <a href="https://wa.me/7226817326?text=Hola,%20%C2%BFme%20puede%20dar%20informaci%C3%B3n?" target="_blank"
         rel="noopener" class="whatsapp-btn" aria-label="Escr&iacute;benos por WhatsApp">
         <i class="bi bi-whatsapp"></i>
     </a>
@@ -185,7 +144,7 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-light mb-4">VACUUM SYSTEMS</h4>
+                    <h4 class="text-light mb-4">TUBE &amp; FITTINGS</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><span
                             data-contacto="direccion">San Mateo, Edo. de M&eacute;xico</span></p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:7229063890"
@@ -198,18 +157,19 @@
 
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-light mb-4">Secciones</h4>
-                    <a class="btn btn-link" href="team.html">Equipos y refacciones</a>
+                    <a class="btn btn-link" href="product.html">Cat&aacute;logo</a>
                     <a class="btn btn-link" href="service.html">Servicios</a>
                     <a class="btn btn-link" href="about.html">Nosotros</a>
                     <a class="btn btn-link" href="contact.html">Contacto</a>
+                    <a class="btn btn-link" href="team.html">Lista de precios DS-LOK</a>
                     <a class="btn btn-link" href="booking.html">Solicitar servicio</a>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-light mb-4">Nuestras marcas</h4>
                     <a class="btn btn-link" href="../irlanalytical/index.html">IRS ANALYTICAL</a>
-                    <a class="btn btn-link" href="index.html">VACUUM SYSTEMS</a>
-                    <a class="btn btn-link" href="../tube&amp;Fittings/index.html">TUBE &amp; FITTINGS</a>
+                    <a class="btn btn-link" href="../vacumSystem/index.html">VACUUM SYSTEMS</a>
+                    <a class="btn btn-link" href="index.html">TUBE &amp; FITTINGS</a>
                 </div>
             </div>
         </div>
@@ -217,7 +177,7 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="index.html">VACUUM SYSTEMS</a>
+                        &copy; <a class="border-bottom" href="index.html">TUBE &amp; FITTINGS</a>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <a class="border-bottom" href="contact.html">Cont&aacute;ctanos</a>
@@ -230,10 +190,14 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <!-- <a href="https://wa.me/7226817326" target="_blank" class="btn-lg btn-primary btn-lg-square rounded-0 float-left">
+        <i class="bi bi-whatsapp" style="font-size: 24px;"></i> 
+    </a>-->
+    <!--<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top">
+        <i class="bi bi-arrow-up"></i></a>-->
 
 
-                <!-- JavaScript Libraries -->
+                        <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>

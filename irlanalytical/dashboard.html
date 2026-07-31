@@ -1,176 +1,499 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IRS Analytical | Panel de Control</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    
+
     <style>
-        :root { --irs-blue: #002347; --irs-light: #f4f7f9; }
-        body { background-color: var(--irs-light); font-family: 'Inter', sans-serif; }
-        
-        /* Sidebar */
-        .sidebar { min-height: 100vh; background: var(--irs-blue); color: white; width: 260px; position: fixed; z-index: 100; }
-        .main-content { margin-left: 260px; padding: 30px; }
-        
-        /* Cards & Selects */
-        .card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .nav-label { font-size: 0.75rem; font-weight: 700; color: #6c757d; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        
-        /* Buttons */
-        .btn-irs { background: var(--irs-blue); color: white; border-radius: 8px; }
-        .btn-irs:hover { background: #003366; color: white; }
-        .btn-action-node { padding: 2px 6px; font-size: 0.8rem; }
-        
-        /* Table */
-        .table thead { background: #f8f9fa; }
-        .badge-oferta { background-color: #ff4757; color: white; }
+        :root {
+            --irs-blue: #002347;
+            --irs-blue-soft: #0b3a6b;
+            --irs-light: #f4f7f9;
+        }
+
+        body {
+            background-color: var(--irs-light);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background: var(--irs-blue);
+            color: #fff;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, .7);
+            border-radius: 8px;
+            padding: .6rem .9rem;
+            margin-bottom: .15rem;
+            font-size: .93rem;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+
+        .sidebar .nav-link.activo {
+            background: var(--irs-blue-soft);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 28px 32px 60px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
+        }
+
+        .nav-label {
+            font-size: .72rem;
+            font-weight: 700;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .btn-irs {
+            background: var(--irs-blue);
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        .btn-irs:hover {
+            background: var(--irs-blue-soft);
+            color: #fff;
+        }
+
+        .btn-nodo {
+            padding: 2px 7px;
+            font-size: .78rem;
+            line-height: 1.4;
+        }
+
+        .miniatura {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+        }
+
+        .kpi {
+            font-size: 1.9rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--irs-blue);
+        }
+
+        .vista {
+            display: none;
+        }
+
+        .vista.activa {
+            display: block;
+        }
+
+        .preview-imagen {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+        }
+
+        .tabla-scroll {
+            max-height: 62vh;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 991px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
+
 <body>
-        <div class="row align-items-center bg-white text-primary">
-        <div class="col text-center">
-            <a href="index.html"><img src="img/logo.png" height="100px" /></a>
+    <aside class="sidebar p-3 shadow">
+        <div class="text-center py-3">
+            <h5 class="fw-bold mb-0">IRS ANALYTICAL</h5>
+            <small class="opacity-50">Panel de administracion</small>
         </div>
-        <div class="col-lg-4">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Buscar productos..." aria-label="Buscar">
-                <button class="btn btn-outline-primary" type="button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-        <div class="col-lg-3 text-center">
-            <a href="login.html" class="text-decoration-none text-primary">
-                <i class="fas fa-user-circle fa-lg"></i>
-                <span class="ms-1 d-none d-md-inline">Ingresar / Mi cuenta</span>
+        <hr class="opacity-25">
+        <nav class="nav flex-column flex-grow-1">
+            <a class="nav-link activo" href="#" data-vista="resumen">
+                <i class="bi bi-grid-1x2-fill me-2"></i>Resumen
             </a>
-        </div>
-        
-    </div>
-
-    <div class="sidebar p-4 shadow">
-        <div class="text-center mb-4">
-            <h4 class="fw-bold">IRS ANALYTICAL</h4>
-            <small class="opacity-50">Sistema de Inventario</small>
-        </div>
-        <hr>
-        <nav class="nav flex-column">
-            <a class="nav-link text-white active" href="#"><i class="bi bi-grid-1x2-fill me-2"></i> Dashboard</a>
-            <a class="nav-link text-white opacity-75" href="#"><i class="bi bi-box-seam me-2"></i> Productos</a>
+            <a class="nav-link" href="#" data-vista="catalogo">
+                <i class="bi bi-box-seam me-2"></i>Catalogo
+            </a>
+            <a class="nav-link" href="#" data-vista="contacto">
+                <i class="bi bi-telephone me-2"></i>Contacto
+            </a>
+            <a class="nav-link" href="#" data-vista="usuarios">
+                <i class="bi bi-people me-2"></i>Usuarios
+            </a>
         </nav>
-    </div>
-
-    <div class="main-content">
-        <header class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold m-0">Catálogo</h2>
-            <button class="btn btn-irs px-4" onclick="adminNodo('empresa', 'crear')">
-                <i class="bi bi-plus-lg me-2"></i>Nueva Empresa
-            </button>
-        </header>
-
-        <div class="row g-3 mb-4">
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <span class="nav-label">1. Empresa</span>
-                        <button class="btn btn-outline-secondary btn-action-node" onclick="adminNodo('empresa', 'editar')"><i class="bi bi-pencil"></i></button>
-                    </div>
-                    <select id="sel-empresa" class="form-select border-0 bg-light mt-2"></select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <span class="nav-label">2. Submarca</span>
-                        <div>
-                            <button class="btn btn-outline-secondary btn-action-node" onclick="adminNodo('submarca', 'editar')"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-outline-primary btn-action-node" onclick="adminNodo('submarca', 'crear')"><i class="bi bi-plus"></i></button>
-                        </div>
-                    </div>
-                    <select id="sel-submarca" class="form-select border-0 bg-light mt-2"></select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <span class="nav-label">3. Categoría</span>
-                        <div>
-                            <button class="btn btn-outline-secondary btn-action-node" onclick="adminNodo('categoria', 'editar')"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-outline-primary btn-action-node" onclick="adminNodo('categoria', 'crear')"><i class="bi bi-plus"></i></button>
-                        </div>
-                    </div>
-                    <select id="sel-categoria" class="form-select border-0 bg-light mt-2"></select>
-                </div>
+        <hr class="opacity-25">
+        <div class="px-2 pb-2">
+            <div class="small opacity-75 text-truncate" id="admin-email">&nbsp;</div>
+            <div class="d-flex gap-2 mt-2">
+                <a href="index.html" class="btn btn-sm btn-outline-light flex-fill">Ver sitio</a>
+                <button id="btn-salir" class="btn btn-sm btn-outline-danger flex-fill">Salir</button>
             </div>
         </div>
+    </aside>
 
-        <div class="card overflow-hidden">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
-                <h5 class="fw-bold m-0 text-dark">Gestión de Productos</h5>
-                <button class="btn btn-success btn-sm px-3" id="btn-nuevo-prod" disabled onclick="abrirModalProd()">
-                    <i class="bi bi-plus-circle me-1"></i> Agregar Producto
+    <main class="main-content">
+
+        <!-- ============ RESUMEN ============ -->
+        <section class="vista activa" data-vista="resumen">
+            <header class="mb-4">
+                <h2 class="fw-bold m-0">Resumen</h2>
+                <p class="text-muted mb-0">Estado general del catalogo y del sitio.</p>
+            </header>
+
+            <div class="row g-3 mb-4" id="kpis"></div>
+
+            <div class="row g-3">
+                <div class="col-lg-7">
+                    <div class="card p-4 h-100">
+                        <h6 class="fw-bold mb-3">Calidad de la informacion</h6>
+                        <div id="salud-catalogo" class="small text-muted">Calculando...</div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card p-4 h-100">
+                        <h6 class="fw-bold mb-3">Productos por empresa</h6>
+                        <div id="reparto-empresas" class="small text-muted">Calculando...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CATALOGO ============ -->
+        <section class="vista" data-vista="catalogo">
+            <header class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h2 class="fw-bold m-0">Catalogo</h2>
+                    <p class="text-muted mb-0">Empresas, submarcas, categorias y productos.</p>
+                </div>
+                <button class="btn btn-irs px-3" data-nodo="empresa" data-accion="crear">
+                    <i class="bi bi-plus-lg me-1"></i>Nueva empresa
                 </button>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th class="ps-4">Producto</th>
-                            <th>Precio</th>
-                            <th>Stock</th>
-                            <th>Estado</th>
-                            <th class="text-end pe-4">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-prods">
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+            </header>
 
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="nav-label">1. Empresa</span>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-outline-secondary btn-nodo" data-nodo="empresa"
+                                    data-accion="editar" title="Renombrar"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-outline-danger btn-nodo" data-nodo="empresa"
+                                    data-accion="eliminar" title="Eliminar"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <select id="sel-empresa" class="form-select border-0 bg-light mt-2"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="nav-label">2. Submarca</span>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-outline-secondary btn-nodo" data-nodo="submarca"
+                                    data-accion="editar" title="Renombrar"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-outline-primary btn-nodo" data-nodo="submarca"
+                                    data-accion="crear" title="Agregar"><i class="bi bi-plus"></i></button>
+                                <button class="btn btn-outline-danger btn-nodo" data-nodo="submarca"
+                                    data-accion="eliminar" title="Eliminar"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <select id="sel-submarca" class="form-select border-0 bg-light mt-2"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="nav-label">3. Categoria</span>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-outline-secondary btn-nodo" data-nodo="categoria"
+                                    data-accion="editar" title="Renombrar"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-outline-primary btn-nodo" data-nodo="categoria"
+                                    data-accion="crear" title="Agregar"><i class="bi bi-plus"></i></button>
+                                <button class="btn btn-outline-danger btn-nodo" data-nodo="categoria"
+                                    data-accion="eliminar" title="Eliminar"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <select id="sel-categoria" class="form-select border-0 bg-light mt-2"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <h6 class="fw-bold m-0">Productos <span class="text-muted fw-normal" id="conteo-prods"></span></h6>
+                    <div class="d-flex gap-2">
+                        <input type="search" id="buscar-prod" class="form-control form-control-sm"
+                            placeholder="Buscar en esta categoria..." style="width:230px;" disabled>
+                        <button class="btn btn-success btn-sm px-3" id="btn-nuevo-prod" disabled>
+                            <i class="bi bi-plus-circle me-1"></i>Agregar producto
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive tabla-scroll">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th class="ps-4" style="width:70px;">Imagen</th>
+                                <th>Producto</th>
+                                <th style="width:120px;">Precio</th>
+                                <th style="width:80px;">Stock</th>
+                                <th style="width:110px;">Estado</th>
+                                <th class="text-end pe-4" style="width:110px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-prods"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CONTACTO ============ -->
+        <section class="vista" data-vista="contacto">
+            <header class="mb-4">
+                <h2 class="fw-bold m-0">Datos de contacto</h2>
+                <p class="text-muted mb-0">
+                    Se aplican a las tres marcas y a todas las paginas del sitio.
+                </p>
+            </header>
+
+            <div class="row g-3">
+                <div class="col-lg-8">
+                    <div class="card p-4">
+                        <form id="form-contacto">
+                            <div class="row g-3" id="campos-contacto"></div>
+                            <div class="d-flex align-items-center gap-3 mt-4">
+                                <button type="submit" class="btn btn-irs px-4">Guardar cambios</button>
+                                <button type="button" class="btn btn-link text-muted" id="btn-restaurar-contacto">
+                                    Restaurar valores originales
+                                </button>
+                                <span id="estado-contacto" class="small"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card p-4 h-100">
+                        <h6 class="fw-bold mb-2">Como funciona</h6>
+                        <p class="small text-muted mb-2">
+                            Estos datos estaban escritos a mano en 32 paginas. Al guardarlos aqui se
+                            reemplazan automaticamente en todo el sitio, incluidos los enlaces de
+                            WhatsApp y los correos.
+                        </p>
+                        <p class="small text-muted mb-0">
+                            Los cambios se ven al recargar cada pagina.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ USUARIOS ============ -->
+        <section class="vista" data-vista="usuarios">
+            <header class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h2 class="fw-bold m-0">Usuarios</h2>
+                    <p class="text-muted mb-0">Cuentas registradas y sus permisos.</p>
+                </div>
+                <button class="btn btn-irs px-3" id="btn-nuevo-usuario">
+                    <i class="bi bi-person-plus me-1"></i>Nuevo usuario
+                </button>
+            </header>
+
+            <div class="card overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">Usuario</th>
+                                <th style="width:150px;">Rol</th>
+                                <th style="width:120px;">Estado</th>
+                                <th style="width:170px;">Ultimo acceso</th>
+                                <th class="text-end pe-4" style="width:150px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-usuarios"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="alert alert-light border mt-3 small text-muted mb-0">
+                <i class="bi bi-info-circle me-1"></i>
+                Borrar la credencial de acceso de otra persona requiere un servidor con el Admin SDK
+                de Firebase. Desde aqui la cuenta se desactiva: deja de tener permisos y no puede
+                entrar al panel, aunque su registro en Firebase Auth siga existiendo.
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ MODAL PRODUCTO ============ -->
     <div class="modal fade" id="modalProd" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold">Detalle del Producto</h5>
+                    <h5 class="fw-bold m-0" id="titulo-modal-prod">Detalle del producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form id="form-prod">
                     <div class="modal-body p-4">
                         <input type="hidden" id="p-id">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small">Nombre</label>
-                            <input type="text" id="p-nombre" class="form-control" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 mb-3">
-                                <label class="form-label fw-bold small">Precio ($)</label>
-                                <input type="number" step="0.01" id="p-precio" class="form-control" required>
+                        <div class="row g-4">
+                            <div class="col-md-7">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Nombre</label>
+                                    <input type="text" id="p-nombre" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Descripcion</label>
+                                    <textarea id="p-descripcion" class="form-control" rows="4"
+                                        placeholder="Texto que aparece en la ficha del producto"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label fw-bold small">Marca</label>
+                                        <input type="text" id="p-marca" class="form-control">
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label fw-bold small">Modelo</label>
+                                        <input type="text" id="p-modelo" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label fw-bold small">Precio</label>
+                                        <input type="text" id="p-precio" class="form-control" required>
+                                        <div class="form-text">Escribe 0 para mostrar "Consultar precio".</div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label fw-bold small">Stock</label>
+                                        <input type="number" id="p-stock" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Categoria</label>
+                                    <select id="p-categoria" class="form-select"></select>
+                                    <div class="form-text">Cambiarla mueve el producto de categoria.</div>
+                                </div>
+                                <div class="form-check form-switch bg-light p-3 ps-5 rounded border">
+                                    <input class="form-check-input" type="checkbox" id="p-oferta">
+                                    <label class="form-check-label fw-bold text-danger" for="p-oferta">
+                                        Marcar como oferta
+                                    </label>
+                                </div>
                             </div>
-                            <div class="col-6 mb-3">
-                                <label class="form-label fw-bold small">Stock</label>
-                                <input type="number" id="p-stock" class="form-control" required>
+
+                            <div class="col-md-5">
+                                <label class="form-label fw-bold small">Imagen</label>
+                                <img id="p-preview" class="preview-imagen mb-2" alt="Vista previa">
+                                <div id="p-origen-imagen" class="small text-muted mb-2"></div>
+                                <input type="text" id="p-imagen-carpeta" class="form-control form-control-sm"
+                                    list="lista-carpetas" placeholder="Automatica segun el nombre">
+                                <datalist id="lista-carpetas"></datalist>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-2 w-100"
+                                    id="btn-imagen-auto">
+                                    Volver a la imagen automatica
+                                </button>
+                                <div class="form-text mt-2">
+                                    Por defecto la imagen se elige sola a partir del nombre. Escribe aqui
+                                    el nombre de una carpeta para fijar otra.
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-check form-switch bg-light p-3 rounded border">
-                            <input class="form-check-input ms-0 me-2" type="checkbox" id="p-oferta">
-                            <label class="form-check-label fw-bold text-danger">En Oferta</label>
                         </div>
                     </div>
                     <div class="modal-footer border-0">
-                        <button type="submit" class="btn btn-irs w-100 py-2">Guardar Producto</button>
+                        <button type="submit" class="btn btn-irs w-100 py-2">Guardar producto</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- ============ MODAL USUARIO ============ -->
+    <div class="modal fade" id="modalUsuario" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold m-0">Nuevo usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="form-usuario">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Nombre</label>
+                            <input type="text" id="u-nombre" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Correo</label>
+                            <input type="email" id="u-email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Contrasena temporal</label>
+                            <input type="text" id="u-pass" class="form-control" minlength="6" required>
+                            <div class="form-text">Minimo 6 caracteres. La persona podra cambiarla despues.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Rol</label>
+                            <select id="u-rol" class="form-select">
+                                <option value="usuario">Usuario</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                        <div id="error-usuario" class="alert alert-danger py-2 small d-none mb-0"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="submit" class="btn btn-irs w-100 py-2">Crear usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="avisos"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="../dashboard.js"></script>
 </body>
+
 </html>

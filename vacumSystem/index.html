@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="img/logo.ico" type="image/x-icon">
-    <title>VACUMM SYSTEMS</title>
+    <title>VACUUM SYSTEMS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link href="../irlanalytical/img/vs_2.png" rel="icon">
+    <link rel="icon" href="img/vs_2.png">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,86 +18,133 @@
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
+    <!-- Bootstrap con los colores de la marca -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
+
     <!-- Spinner Start -->
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">Cargando...</span>
         </div>
     </div>
+    <!-- Spinner End -->
+
+    <!-- Aviso superior -->
+    <div class="row g-0 align-items-center bg-primary text-light py-1">
+        <div class="col-12 col-md text-center">
+            <p class="mb-0 small">Bombas de vac&iacute;o, refacciones y servicio t&eacute;cnico. Ver <a href="team.html" class="text-light fw-bold">equipos</a></p>
+        </div>
+        <div class="col-12 col-md text-center">
+            <p class="mb-0 small"><i class="fas fa-phone-alt me-2"></i>Cont&aacute;ctanos
+                <a href="tel:7229063890" class="text-light" data-contacto="telefonoPrincipal">7229063890</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Logotipo, buscador y cuenta -->
+    <div class="row g-0 align-items-center bg-white py-2">
+        <div class="col-12 col-lg-4 text-center">
+            <a href="index.html"><img src="img/vs_2.png" alt="VACUUM SYSTEMS" height="90"></a>
+        </div>
+        <div class="col-12 col-lg-5 position-relative px-3 py-2 py-lg-0" style="z-index: 1060;">
+            <div class="input-group">
+                <input type="text" id="input-busqueda" class="form-control" placeholder="Buscar productos..."
+                    aria-label="Buscar productos" autocomplete="off" data-busqueda-destino="team.html" data-busqueda-empresa="VACUUM SYSTEMS">
+                <button class="btn btn-outline-primary" type="button" id="btn-buscar" aria-label="Buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div id="sugerencias-busqueda" class="list-group position-absolute w-100 shadow-lg d-none"
+                style="z-index: 9999; top: 100%; left: 0; background-color: #ffffff !important; border: 1px solid #dee2e6; border-radius: 0 0 8px 8px;">
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 text-center">
+            <a href="login.html" class="text-decoration-none text-primary">
+                <i class="fas fa-user-circle fa-lg"></i>
+                <span class="ms-1 d-none d-md-inline">Ingresar / Mi cuenta</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Navbar Start -->
     <div class="container-fluid nav-bar bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
-            <a href="service.html"><img src="../irlanalytical/img/vs_2.png" height=100px>
-           </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
+                <h1 class="text-primary m-0">VS</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-label="Abrir men&uacute;">
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav me-auto">
-                    <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                <div class="navbar-nav me-auto" id="main-nav-container" data-menu-empresa="VACUUM SYSTEMS" data-menu-catalogo="team.html">
+                    <a href="team.html" class="nav-item nav-link">Equipos y refacciones</a>
                     <a href="service.html" class="nav-item nav-link">Servicios</a>
-                    <!-- <a href="service.html" class="nav-item nav-link">Servicios</a> -->
-                    <a href="team.html" class="nav-item nav-link">Equipos</a>
-                    <div class="nav-item dropdown">
-                    </div>
+                    <a href="about.html" class="nav-item nav-link">Nosotros</a>
+                    <a href="contact.html" class="nav-item nav-link">Contacto</a>
                 </div>
-                <!-- <a href="https://api.whatsapp.com/send?phone=5576574684&text=Hola,%20estoy%20interesado%20en%20sus%20servicios."
-                    class="btn btn-success" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Chatear por WhatsApp
-                </a> -->
             </div>
         </nav>
     </div>
     <!-- Navbar End -->
+
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+                <img class="img-fluid" src="img/bv_vs2.jpg" alt="Venta, refacciones y servicio especializado">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                     style="background: rgba(0, 0, 0, .4);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Equipos de cromatografia
-                                </h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Revisa nuestro catálogo de
-                                    productos</h1>
-                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Los mejores proveedores para tu
-                                    laboratorio</p>
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Bombas de vac&iacute;o</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Venta, refacciones y servicio especializado</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Diagn&oacute;stico, mantenimiento preventivo y correctivo para tu equipo.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                <img class="img-fluid" src="img/vs_i1.jpg" alt="Instrumentaci&oacute;n nueva y reacondicionada">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                     style="background: rgba(0, 0, 0, .4);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Las mejores marcas del
-                                    mercado</h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Diferentes productos que se
-                                    adecuan a tus necesidades</h1>
-                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqui en IRL ANALYTICAL</p>
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Equipos anal&iacute;ticos</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Instrumentaci&oacute;n nueva y reacondicionada</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">GC, GC-MS, HPLC, UV-VIS, AA e ICP, con consumibles y reactivos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="img/bb_vs2.jpg" alt="Kits de mantenimiento y refacciones">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                    style="background: rgba(0, 0, 0, .4);">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-10 col-lg-8">
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Refacciones en existencia</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Kits de mantenimiento para tu bomba</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqu&iacute; en VACUUM SYSTEMS</p>
                             </div>
                         </div>
                     </div>
@@ -109,100 +154,191 @@
     </div>
     <!-- Carousel End -->
 
+    <div class="title text-center text-primary fadeInUp wow">
+        <h1>Conoce nuestras marcas y servicios</h1>
+    </div>
 
-    <!-- Service Start -->
+    <!-- Marcas Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.1s">
                     <div class="overflow-hidden">
-                        <img class="img-fluid w-100 h-100" src="img/IRL_B_B.png" alt="IRL ANALYTICAL" height=250PX>
+                        <img class="img-fluid w-100 h-100" src="img/logo.png" alt="IRS ANALYTICAL">
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
-                        <h5 class="text-truncate me-3 mb-0">IRL ANALYTICAL</h5>
-                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0" href=""><i
-                                class="fa fa-arrow-right"></i></a>
+                        <h5 class="text-truncate me-3 mb-0">IRS ANALYTICAL</h5>
+                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
+                            href="../irlanalytical/index.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.3s">
                     <div class="overflow-hidden">
-                        <img class="img-fluid w-100 h-100" src="img/TNF_C.png" alt="TUBE & FITTINGS" height=250PX>
+                        <img class="img-fluid w-100 h-100" src="img/TNF_L2.png" alt="TUBE &amp; FITTINGS">
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
-                        <h5 class="text-truncate me-3 mb-0">TUBE & FITTINGS</h5>
-                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0" href=""><i
-                                class="fa fa-arrow-right"></i></a>
+                        <h5 class="text-truncate me-3 mb-0">TUBE &amp; FITTINGS</h5>
+                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
+                            href="../tube&amp;Fittings/service.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.5s">
                     <div class="overflow-hidden">
-                        <img class="img-fluid w-100 h-100" src="img/VS_B_B.png" alt="VACUUM SYSTEMS" height=250PX>
+                        <img class="img-fluid w-100 h-100" src="img/vs_2.png" alt="VACUUM SYSTEMS">
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
-                        <h5 class="text-truncate me-3 mb-0">VACCUMM SYSTEMS</h5>
-                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0" href=""><i
-                                class="fa fa-arrow-right"></i></a>
+                        <h5 class="text-truncate me-3 mb-0">VACUUM SYSTEMS</h5>
+                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
+                            href="service.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Service End -->
+    <!-- Marcas End -->
 
+    <!-- Servicios destacados -->
+    <div class="container-fluid py-5 px-4 px-lg-0">
+        <div class="row g-0">
+            <div class="col-lg-3 d-none d-lg-flex">
+                <div class="d-flex align-items-center justify-content-center bg-primary w-100 h-100">
+                    <h1 class="display-3 text-white m-0" style="transform: rotate(-90deg);">Servicios</h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-9">
+                <div class="ms-lg-5 ps-lg-5">
+                    <div class="text-center text-lg-start wow fadeInUp" data-wow-delay="0.1s">
+                        <h1 class="mb-5">M&aacute;s de 10 a&ntilde;os en equipos de vac&iacute;o y laboratorio</h1>
+                    </div>
+                    <div class="owl-carousel service-carousel position-relative wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-microscope fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Equipos anal&iacute;ticos</h4>
+                            <p>Gran variedad de equipos nuevos y reacondicionados</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>GC, GC-MS y HPLC</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>UV-VIS, AA e ICP</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Consumibles y reactivos</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-vials fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Infraestructura</h4>
+                            <p>Soluciones completas para laboratorio</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Mesas de laboratorio</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Sistemas de extracci&oacute;n</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Cabinas m&oacute;viles para campo</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-compress-arrows-alt fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Bombas de vac&iacute;o</h4>
+                            <p>Venta y servicio especializado</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Venta y diagn&oacute;stico</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Mantenimiento preventivo y correctivo</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Consumibles y refacciones</p>
+                            <a href="team.html" class="btn bg-white text-primary w-100 mt-2">Ver equipos<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-tools fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Servicios t&eacute;cnicos</h4>
+                            <p>Soporte especializado integral</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Bombas turbomoleculares</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Kits de mantenimiento</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Generadores de gases</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Servicios destacados End -->
 
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <img src="img/IRL_B_B.png" height=20%>
-                    <h1 class="mb-4">Buscamos lo mejor del mercado para tus necesidades</h1>
-                    <p class="mb-4">Revisa nuestro catálogo de productos que se adecue mejor a tus necesidades</p>
+                    <img src="img/vs_2.png" alt="VACUUM SYSTEMS" height="90" class="mb-3">
+                    <h1 class="mb-4">Calidad y confiabilidad para tu laboratorio</h1>
+                    <p class="mb-4">Bombas de vac&iacute;o, refacciones y servicio t&eacute;cnico con m&aacute;s de 10 a&ntilde;os de experiencia.</p>
                     <div class="bg-primary d-flex align-items-center p-4 mt-5">
                         <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-white"
                             style="width: 60px; height: 60px;">
                             <i class="fa fa-phone-alt fa-2x text-primary"></i>
                         </div>
                         <div class="ms-3">
-                            <p class="fs-5 fw-medium mb-2 text-white">¡Contáctanos!</p>
-                            <h3 class="m-0 text-secondary">Por Whatsapp<a href="https://api.whatsapp.com/send?phone=7226817326&text=Hola,%20estoy%20interesado%20en%20sus%20servicios." class="m-0 text-secondary">   ¡Haz click aqui!</a></h3>
+                            <p class="fs-5 fw-medium mb-2 text-white">¡Cont&aacute;ctanos!</p>
+                            <h3 class="m-0 text-secondary">Por Whatsapp<a
+                                    href="https://api.whatsapp.com/send?phone=7229063890&text=Hola,%20estoy%20interesado%20en%20sus%20servicios."
+                                    class="m-0 text-secondary"> ¡Haz click aqui!</a></h3>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 pt-4" style="min-height: 500px;">
                     <div class="position-relative h-100 wow fadeInUp" data-wow-delay="0.5s">
-                        <img class="position-absolute img-fluid w-100 h-100" src="img/about-1.jpg"
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/bv_vs2.jpg"
                             style="object-fit: cover; padding: 0 0 50px 100px;" alt="">
                         <img class="position-absolute start-0 bottom-0 img-fluid bg-white pt-2 pe-2 w-50 h-50"
-                            src="img/about-2.jpg" style="object-fit: cover;" alt="">
+                            src="img/bb_vs2.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- About End -->
+
+    <a href="https://wa.me/7226817326?text=Hola,%20%C2%BFme%20puede%20dar%20informaci%C3%B3n?" target="_blank"
+        rel="noopener" class="whatsapp-btn" aria-label="Escr&iacute;benos por WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Dirección</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>*POR REVISAR</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>999-999-9999</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>ejemplo@ejemplo.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-light mb-4">VACUUM SYSTEMS</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><span
+                            data-contacto="direccion">San Mateo, Edo. de M&eacute;xico</span></p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:7229063890"
+                            class="text-light text-decoration-none" data-contacto="telefonoPrincipal">7229063890</a></p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:contacto@irsmx.com"
+                            class="text-light text-decoration-none" data-contacto="correoContacto">contacto@irsmx.com</a></p>
+                    <p class="mb-0"><i class="fa fa-clock me-3"></i><span data-contacto="horario">Lunes a viernes de
+                            9:00 a 18:00</span></p>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Marcas</h4>
-                    <a class="btn btn-link" href="">IRL ANALYTICAL</a>
-                    <a class="btn btn-link" href="">VACUUM SYSTEMS</a>
-                    <a class="btn btn-link" href="">TUBE & FITTINGS</a>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-light mb-4">Secciones</h4>
+                    <a class="btn btn-link" href="team.html">Equipos y refacciones</a>
+                    <a class="btn btn-link" href="service.html">Servicios</a>
+                    <a class="btn btn-link" href="about.html">Nosotros</a>
+                    <a class="btn btn-link" href="contact.html">Contacto</a>
+                    <a class="btn btn-link" href="booking.html">Solicitar servicio</a>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-light mb-4">Nuestras marcas</h4>
+                    <a class="btn btn-link" href="../irlanalytical/index.html">IRS ANALYTICAL</a>
+                    <a class="btn btn-link" href="../tube&amp;Fittings/index.html">TUBE &amp; FITTINGS</a>
+                    <a class="btn btn-link" href="index.html">VACUUM SYSTEMS</a>
                 </div>
             </div>
         </div>
@@ -210,19 +346,16 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">IRL ANALYTICAL</a>
+                        &copy; <a class="border-bottom" href="index.html">VACUUM SYSTEMS</a>
                     </div>
-
+                    <div class="col-md-6 text-center text-md-end">
+                        <a class="border-bottom" href="contact.html">Cont&aacute;ctanos</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Footer End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -238,6 +371,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script type="module" src="../firebase.js"></script>
 </body>
 
 </html>

@@ -1,9 +1,21 @@
 /********** Template CSS **********/
+
+/* Paleta de TUBE & FITTINGS, tomada de su logotipo (img/TNF_L2.png):
+   el azul marino del logo es #002554 y su acento naranja es #FF4D00.
+   El azul marino puro queda para fondos grandes (--dark, pie de pagina) y
+   --primary es ese mismo azul aclarado, para que los botones tengan margen
+   de oscurecerse al pasar el raton.
+
+   Los tres sitios comparten el mismo diseno y solo cambian de color. Ese
+   cambio no vive aqui: css/bootstrap.min.css viene compilado con los colores
+   del tema ya escritos en cada regla, y se reescribio para esta marca
+   conservando los mismos tonos derivados (hover, activo, fondos suaves).
+   Para cambiar de color hay que reescribir tambien ese archivo. */
 :root {
-    --primary: #1E60AA;
-    --secondary: #FF4917;
-    --light: #EDF1FC;
-    --dark: #17224D;
+    --primary: #003F8F;
+    --secondary: #FF4D00;
+    --light: #EBF0F6;
+    --dark: #002554;
 }
 
 .fw-medium {
@@ -81,7 +93,7 @@
     position: relative;
     padding: 0 4.75rem;
     transition: .5s;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 .nav-bar.sticky-top {
@@ -181,7 +193,7 @@
 @media (max-width: 768px) {
     .header-carousel .owl-carousel-item {
         position: relative;
-        min-height: 500px;
+        min-height: 600px;
     }
     
     .header-carousel .owl-carousel-item img {
@@ -585,6 +597,7 @@
 .footer .copyright a {
     color: var(--light);
 }
+/*Estilos generales del boton whatsapp*/
 .whatsapp-btn {
     position: fixed;
     bottom: 20px;
@@ -625,12 +638,52 @@
   /*Estilos de animacion del icono latiendo*/
   @keyframes beat {
     0% {
-      transform: scale(1.9);
+      transform: scale(1);
     }
     50% {
-      transform: scale(1.7);
+      transform: scale(1.2);
     }
     100% {
-      transform: scale(1.9);
+      transform: scale(1);
     }
   }
+#sugerencias-busqueda {
+    /* Forzamos que el fondo sea blanco opaco para que no se trasluzca lo de abajo */
+    background-color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Si el buscador está arriba del nav-bar en el código, el padre debe permitir el flujo */
+header, .top-bar, .col-lg-4 {
+    overflow: visible !important;
+}
+
+/*** Tarjetas del catalogo de productos ***/
+.card-img-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.card-img-container img {
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.pagination .page-link {
+    cursor: pointer;
+}
+
+/*** Paneles con el color de acento de la marca ***/
+/* Los usan la pagina de servicios y la barra lateral del catalogo. Antes cada
+   sitio los pintaba con un rgb() escrito dentro del HTML, y por eso una misma
+   marca acababa usando tres naranjas distintos segun la pagina. */
+.panel-acento {
+    background-color: var(--secondary);
+}
+
+.panel-suave {
+    background-color: var(--light);
+}

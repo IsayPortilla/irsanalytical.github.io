@@ -645,3 +645,33 @@
 header, .top-bar, .col-lg-4 {
     overflow: visible !important;
 }
+
+/*** Tarjetas del catalogo de productos ***/
+.card-img-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.card-img-container img {
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.pagination .page-link {
+    cursor: pointer;
+}
+
+/*** Paneles con el color de acento de la marca ***/
+/* Los usan la pagina de servicios y la barra lateral del catalogo. Antes cada
+   sitio los pintaba con un rgb() escrito dentro del HTML, y por eso una misma
+   marca acababa usando tres naranjas distintos segun la pagina. */
+.panel-acento {
+    background-color: var(--secondary);
+}
+
+.panel-suave {
+    background-color: var(--light);
+}

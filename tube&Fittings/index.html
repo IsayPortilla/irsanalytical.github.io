@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="img/logo.ico" type="image/x-icon">
-    <title>IRS ANALYTICAL</title>
+    <title>TUBE &amp; FITTINGS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="img/TNF_L2.png">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,19 +18,18 @@
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
+    <!-- Bootstrap con los colores de la marca -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -41,30 +38,33 @@
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">Cargando...</span>
         </div>
     </div>
-    <div class="row align-items-start bg-primary text-light">
-        <div class="col text-center">
-            <p class="fs-6 fs-md-5 fs-lg-4"><b>COMPRAS INMEDIATAS</b> en nuestras
-                ofertas. Da click <a href="specials.html" class="text-light pa"><b>AQUÍ</b></a></p>
+    <!-- Spinner End -->
+
+    <!-- Aviso superior -->
+    <div class="row g-0 align-items-center bg-primary text-light py-1">
+        <div class="col-12 col-md text-center">
+            <p class="mb-0 small">Conexiones, tuber&iacute;a e instrumentaci&oacute;n para gases. Ver <a href="product.html" class="text-light fw-bold">cat&aacute;logo</a></p>
         </div>
-        <div class="col text-center">
-            <i class="fas fa-phone-alt"> </i> Contáctanos 7229063890
+        <div class="col-12 col-md text-center">
+            <p class="mb-0 small"><i class="fas fa-phone-alt me-2"></i>Cont&aacute;ctanos
+                <a href="tel:7229063890" class="text-light" data-contacto="telefonoPrincipal">7229063890</a>
+            </p>
         </div>
     </div>
-    <!--BANNER SECUNDARIO-->
-    <div class="row align-items-center bg-white text-primary">
-        <div class="col text-center">
-            <a href="index.html"><img src="img/logo.png" height="100px" /></a>
+
+    <!-- Logotipo, buscador y cuenta -->
+    <div class="row g-0 align-items-center bg-white py-2">
+        <div class="col-12 col-lg-4 text-center">
+            <a href="index.html"><img src="img/TNF_L2.png" alt="TUBE &amp; FITTINGS" height="90"></a>
         </div>
-
-
-        <div class="col-lg-4 position-relative" style="z-index: 1060;">
+        <div class="col-12 col-lg-5 position-relative px-3 py-2 py-lg-0" style="z-index: 1060;">
             <div class="input-group">
                 <input type="text" id="input-busqueda" class="form-control" placeholder="Buscar productos..."
-                    aria-label="Buscar" autocomplete="off">
-                <button class="btn btn-outline-primary" type="button" id="btn-buscar">
+                    aria-label="Buscar productos" autocomplete="off" data-busqueda-destino="product.html" data-busqueda-ficha="detail.html" data-busqueda-empresa="TUBE AND FITTINGS">
+                <button class="btn btn-outline-primary" type="button" id="btn-buscar" aria-label="Buscar">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
@@ -72,130 +72,114 @@
                 style="z-index: 9999; top: 100%; left: 0; background-color: #ffffff !important; border: 1px solid #dee2e6; border-radius: 0 0 8px 8px;">
             </div>
         </div>
-
-
-
-        <div class="col-lg-3 text-center">
+        <div class="col-12 col-lg-3 text-center">
             <a href="login.html" class="text-decoration-none text-primary">
                 <i class="fas fa-user-circle fa-lg"></i>
                 <span class="ms-1 d-none d-md-inline">Ingresar / Mi cuenta</span>
             </a>
         </div>
     </div>
+
+    <!-- Navbar Start -->
     <div class="container-fluid nav-bar bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
             <a href="index.html" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
-                <h1 class="text-primary m-0">IRS</h1>
+                <h1 class="text-primary m-0">TNF</h1>
             </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-label="Abrir men&uacute;">
                 <span class="fa fa-bars"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav me-auto" id="main-nav-container">
-
-                    <a href="specials.html" class="nav-item nav-link text-danger">Ofertas Especiales</a>
-                    <a href="about-us.html" class="nav-item nav-link ">Nosotros</a>
+                <div class="navbar-nav me-auto" id="main-nav-container" data-menu-empresa="TUBE AND FITTINGS" data-menu-catalogo="product.html">
+                    <a href="product.html" class="nav-item nav-link">Cat&aacute;logo</a>
+                    <a href="service.html" class="nav-item nav-link">Servicios</a>
+                    <a href="about.html" class="nav-item nav-link">Nosotros</a>
                     <a href="contact.html" class="nav-item nav-link">Contacto</a>
                 </div>
             </div>
         </nav>
     </div>
     <!-- Navbar End -->
+
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
-            <div class="owl-carousel-item position-relative" style="height: auto;">
-                <img class="img-fluid h-100" src="img/IRS_BANNER.png" alt="">
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="img/tnf_f1.jpg" alt="Tuber&iacute;a y accesorios para tu instalaci&oacute;n">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                     style="background: rgba(0, 0, 0, .4);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Equipos de
-                                    cromatografia
-                                </h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Revisa nuestro catálogo
-                                    de
-                                    productos</h1>
-                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Los mejores proveedores para tu
-                                    laboratorio</p>
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Conexiones para gases especiales</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Tuber&iacute;a y accesorios para tu instalaci&oacute;n</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">N2, H2, O2, aire, acetileno, arg&oacute;n, helio y otros gases.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                <img class="img-fluid" src="img/tnf_f3.jpg" alt="Del regulador a la l&iacute;nea de servicio">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                     style="background: rgba(0, 0, 0, .4);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Las mejores marcas
-                                    del
-                                    mercado</h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Diferentes productos que
-                                    se
-                                    adecuan a tus necesidades</h1>
-                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqui en IRS ANALYTICAL</p>
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Sistemas completos de distribuci&oacute;n</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Del regulador a la l&iacute;nea de servicio</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Dise&ntilde;o, montaje y puesta en marcha de l&iacute;neas de alta pureza.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <a href="">
-                    <img class="img-fluid" src="img/carousel-3.jpg" alt="Ofertas!">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
-                        style="background: rgba(0, 0, 0, .4);">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-10 col-lg-8">
-                                    <h5 class="text-white text-uppercase mb-3 animated slideInDown">Revisa
-                                        nuestras
-                                        ofertas</h5>
-                                    <h1 class="display-3 text-white animated slideInDown mb-4">Piezas
-                                        limitadas
-                                        ¡Aprovéchalo!</h1>
-                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqui en IRS ANALYTICAL</p>
-                                </div>
+                <img class="img-fluid" src="img/tnf_f2.jpg" alt="Cat&aacute;logo Tube &amp; Fittings">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                    style="background: rgba(0, 0, 0, .4);">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-10 col-lg-8">
+                                <h5 class="text-white text-uppercase mb-3 animated slideInDown">Revisa nuestro cat&aacute;logo</h5>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Conectores, codos, niples, v&aacute;lvulas y reguladores</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Aqu&iacute; en TUBE &amp; FITTINGS</p>
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
     </div>
     <!-- Carousel End -->
+
     <div class="title text-center text-primary fadeInUp wow">
-        <h1>
-            Conoce nuestras marcas y servicios
-        </h1>
+        <h1>Conoce nuestras marcas y servicios</h1>
     </div>
+
     <!-- Marcas Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.1s">
                     <div class="overflow-hidden">
-                        <img class="img-fluid w-100 h-100" src="img/logo.png" alt="IRL ANALYTICAL">
+                        <img class="img-fluid w-100 h-100" src="img/logo.png" alt="IRS ANALYTICAL">
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
                         <h5 class="text-truncate me-3 mb-0">IRS ANALYTICAL</h5>
-                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0" href=""><i
-                                class="fa fa-arrow-right"></i></a>
+                        <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
+                            href="../irlanalytical/index.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.3s">
                     <div class="overflow-hidden">
-                        <img class="img-fluid w-100 h-100" src="img/TNF_L2.png" alt="TUBE & FITTINGS">
+                        <img class="img-fluid w-100 h-100" src="img/TNF_L2.png" alt="TUBE &amp; FITTINGS">
                     </div>
                     <div class="d-flex align-items-center justify-content-between bg-light p-4">
-                        <h5 class="text-truncate me-3 mb-0">TUBE & FITTINGS</h5>
+                        <h5 class="text-truncate me-3 mb-0">TUBE &amp; FITTINGS</h5>
                         <a class="btn btn-square btn-outline-primary border-2 border-white flex-shrink-0"
-                            href="../tube&Fittings/service.html"><i class="fa fa-arrow-right"></i></a>
+                            href="service.html"><i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 service-item-top wow fadeInUp" data-wow-delay="0.5s">
@@ -211,49 +195,96 @@
             </div>
         </div>
     </div>
-    <!-- Service End -->
+    <!-- Marcas End -->
 
-    <!-- OFERTAS -->
+    <!-- Servicios destacados -->
     <div class="container-fluid py-5 px-4 px-lg-0">
         <div class="row g-0">
             <div class="col-lg-3 d-none d-lg-flex">
                 <div class="d-flex align-items-center justify-content-center bg-primary w-100 h-100">
-                    <h1 class="display-3 text-white m-0" style="transform: rotate(-90deg);">¡Ofertas!</h1>
+                    <h1 class="display-3 text-white m-0" style="transform: rotate(-90deg);">Servicios</h1>
                 </div>
             </div>
             <div class="col-md-12 col-lg-9">
                 <div class="ms-lg-5 ps-lg-5">
                     <div class="text-center text-lg-start wow fadeInUp" data-wow-delay="0.1s">
-
-                        <h1 class="mb-5">¡Ofertas imperdibles para tu laboratorio!</h1>
+                        <h1 class="mb-5">M&aacute;s de 10 a&ntilde;os instalando l&iacute;neas de gases</h1>
                     </div>
                     <div class="owl-carousel service-carousel position-relative wow fadeInUp" data-wow-delay="0.1s">
                         <div class="bg-light p-4">
-                            <div class="d-flex align-items-center justify-content-center ">
-                                <img src="img/ofertas.png" style="height: 300px;  align-items: center;" />
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-stream fa-2x text-primary"></i>
                             </div>
+                            <h4 class="mb-3">Tuber&iacute;as y Accesorios</h4>
+                            <p>Venta e instalaci&oacute;n para gases especiales</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>N2, H2, O2, aire y acetileno</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Arg&oacute;n, helio y otros gases</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Sistemas completos de distribuci&oacute;n</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-tachometer-alt fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Reguladores e Instrumentaci&oacute;n</h4>
+                            <p>Control y medici&oacute;n de alta precisi&oacute;n</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Reguladores de alta pureza</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Man&oacute;metros y v&aacute;lvulas de paso</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>V&aacute;lvulas de control de flujo</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-wind fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Generadores de Gases</h4>
+                            <p>Equipos para generaci&oacute;n in situ</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Aire seco, cero y grado TOC</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Nitr&oacute;geno e hidr&oacute;geno</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Sistemas de alta pureza</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
+                        </div>
+                        <div class="bg-light p-4">
+                            <div class="d-flex align-items-center justify-content-center border border-5 border-white mb-4"
+                                style="width: 75px; height: 75px;">
+                                <i class="fas fa-cogs fa-2x text-primary"></i>
+                            </div>
+                            <h4 class="mb-3">Sistemas Especializados</h4>
+                            <p>Desarrollo de soluciones a medida</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Preparaci&oacute;n de muestras</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Instalaciones el&eacute;ctricas</p>
+                            <p class="text-primary fw-medium"><i class="fa fa-check text-success me-2"></i>Respaldo de energ&iacute;a y regulaci&oacute;n</p>
+                            <a href="service.html" class="btn bg-white text-primary w-100 mt-2">Ver servicios<i
+                                    class="fa fa-arrow-right text-secondary ms-2"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- OFERTAS -->
+    <!-- Servicios destacados End -->
+
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <img src="img/logo.png" height=20%>
-                    <h1 class="mb-4">Calidad y confiabilidad para tu laboratorio</h1>
-                    <p class="mb-4">Revisa nuestro catálogo de productos que se adecue mejor a tus necesidades</p>
+                    <img src="img/TNF_L2.png" alt="TUBE &amp; FITTINGS" height="90" class="mb-3">
+                    <h1 class="mb-4">Calidad y confiabilidad para tu instalaci&oacute;n</h1>
+                    <p class="mb-4">Revisa nuestro cat&aacute;logo de conexiones, tuber&iacute;a e instrumentaci&oacute;n para gases especiales.</p>
                     <div class="bg-primary d-flex align-items-center p-4 mt-5">
                         <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-white"
                             style="width: 60px; height: 60px;">
                             <i class="fa fa-phone-alt fa-2x text-primary"></i>
                         </div>
                         <div class="ms-3">
-                            <p class="fs-5 fw-medium mb-2 text-white">¡Contáctanos!</p>
+                            <p class="fs-5 fw-medium mb-2 text-white">¡Cont&aacute;ctanos!</p>
                             <h3 class="m-0 text-secondary">Por Whatsapp<a
                                     href="https://api.whatsapp.com/send?phone=7229063890&text=Hola,%20estoy%20interesado%20en%20sus%20servicios."
                                     class="m-0 text-secondary"> ¡Haz click aqui!</a></h3>
@@ -262,44 +293,52 @@
                 </div>
                 <div class="col-lg-6 pt-4" style="min-height: 500px;">
                     <div class="position-relative h-100 wow fadeInUp" data-wow-delay="0.5s">
-                        <img class="position-absolute img-fluid w-100 h-100" src="img/IRS3.jpeg"
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/tnf_f3.jpg"
                             style="object-fit: cover; padding: 0 0 50px 100px;" alt="">
                         <img class="position-absolute start-0 bottom-0 img-fluid bg-white pt-2 pe-2 w-50 h-50"
-                            src="img/IRS2.jpeg" style="object-fit: cover;" alt="">
+                            src="img/tnf_f4.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-   <a href="https://wa.me/7229063890?text=Hola+¿me puede dar información?" target=”_blank” class="whatsapp-btn">
+    <!-- About End -->
+
+    <a href="https://wa.me/7226817326?text=Hola,%20%C2%BFme%20puede%20dar%20informaci%C3%B3n?" target="_blank"
+        rel="noopener" class="whatsapp-btn" aria-label="Escr&iacute;benos por WhatsApp">
         <i class="bi bi-whatsapp"></i>
     </a>
-    <!-- About End -->
+
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Dirección</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sor Juana Inés de la Cruz, CP 52140,
-                        San
-                        Mateo, Edo. de México</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>5613477010, 7229063890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>cotizaciones@irsmx.com o contacto@irsmx.com
-                    </p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-light mb-4">TUBE &amp; FITTINGS</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><span
+                            data-contacto="direccion">San Mateo, Edo. de M&eacute;xico</span></p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:7229063890"
+                            class="text-light text-decoration-none" data-contacto="telefonoPrincipal">7229063890</a></p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:contacto@irsmx.com"
+                            class="text-light text-decoration-none" data-contacto="correoContacto">contacto@irsmx.com</a></p>
+                    <p class="mb-0"><i class="fa fa-clock me-3"></i><span data-contacto="horario">Lunes a viernes de
+                            9:00 a 18:00</span></p>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Marcas</h4>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-light mb-4">Secciones</h4>
+                    <a class="btn btn-link" href="product.html">Cat&aacute;logo</a>
+                    <a class="btn btn-link" href="service.html">Servicios</a>
+                    <a class="btn btn-link" href="about.html">Nosotros</a>
+                    <a class="btn btn-link" href="contact.html">Contacto</a>
+                    <a class="btn btn-link" href="booking.html">Solicitar servicio</a>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-light mb-4">Nuestras marcas</h4>
                     <a class="btn btn-link" href="../irlanalytical/index.html">IRS ANALYTICAL</a>
-                    <a class="btn btn-link" href="../vacumSystem/service.html">VACUUM SYSTEMS</a>
-                    <a class="btn btn-link" href="../tube&Fittings/service.html">TUBE & FITTINGS</a>
+                    <a class="btn btn-link" href="index.html">TUBE &amp; FITTINGS</a>
+                    <a class="btn btn-link" href="../vacumSystem/index.html">VACUUM SYSTEMS</a>
                 </div>
             </div>
         </div>
@@ -307,14 +346,17 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">IRS ANALYTICAL</a>
+                        &copy; <a class="border-bottom" href="index.html">TUBE &amp; FITTINGS</a>
                     </div>
-
+                    <div class="col-md-6 text-center text-md-end">
+                        <a class="border-bottom" href="contact.html">Cont&aacute;ctanos</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Footer End -->
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -330,7 +372,6 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script type="module" src="../firebase.js"></script>
-    <script type="module" src="../auth_handler.js"></script>
 </body>
 
 </html>

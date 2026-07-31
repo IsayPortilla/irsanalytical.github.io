@@ -1,355 +1,777 @@
-// import { db } from '../firebase.js';
-// import { ref, push, onValue, remove, update, get } 
-//     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+// Panel de administracion: catalogo, datos de contacto, usuarios y resumen.
+//
+// Todo se resuelve en el navegador con JavaScript nativo contra Firebase.
 
-// // Selectores
-// const selEmp = document.getElementById('sel-empresa');
-// const selSub = document.getElementById('sel-submarca');
-// const selCat = document.getElementById('sel-categoria');
-// const tabla = document.getElementById('tabla-prods');
-// const btnAddProd = document.getElementById('btn-nuevo-prod');
+import { auth, db, firebaseConfig } from './firebase.js';
+import { exigirAdmin } from './guarda_admin.js';
+import {
+    CAMPOS_CONTACTO, CONTACTO_POR_DEFECTO, RUTA_CONFIG
+} from './contacto.js';
+import {
+    ref, get, set, push, update, remove, onValue
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import {
+    getAuth, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import {
+    cargarMapeoImagenes, refrescarMapeoImagenes, cargarIndiceImagenes,
+    imagenDeProducto, IMAGEN_POR_DEFECTO
+} from './irlanalytical/js/imagenes_productos.js';
 
-// // --- 1. CARGA DE ESTRUCTURA (BAJO DEMANDA) ---
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => [...document.querySelectorAll(sel)];
 
-// // Escucha inicial de Empresas
-// onValue(ref(db, 'nombres_empresa'), (snap) => {
-//     llenarSelect(selEmp, snap.val());
-// });
+let admin = null;
+let mapeoImagenes = {};
+let indiceImagenes = {};
+let productosVista = [];
+let cancelarEscuchaProd = null;
+// Arbol completo del catalogo, para el resumen y el selector de categorias.
+let arbol = { empresas: {}, submarcas: {}, categorias: {}, productos: {} };
 
-// // Al cambiar Empresa -> Carga Submarcas
-// selEmp.onchange = async () => {
-//     resetSelects(['sub', 'cat']);
-//     if (!selEmp.value) return;
-//     const snap = await get(ref(db, `nombres_submarca/${selEmp.value}`));
-//     llenarSelect(selSub, snap.val());
-// };
+// --- UTILIDADES ---
 
-// // Al cambiar Submarca -> Carga Categorías
-// selSub.onchange = async () => {
-//     resetSelects(['cat']);
-//     if (!selSub.value) return;
-//     const snap = await get(ref(db, `nombres_categoria/${selSub.value}`));
-//     llenarSelect(selCat, snap.val());
-// };
+function escapar(texto) {
+    return String(texto ?? '').replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+}
 
-// // Al cambiar Categoría -> Carga Realtime de Productos
-// selCat.onchange = () => {
-//     if (!selCat.value) {
-//         btnAddProd.disabled = true;
-//         tabla.innerHTML = '';
-//         return;
-//     }
-//     btnAddProd.disabled = false;
-//     onValue(ref(db, `data_productos/${selCat.value}`), (snap) => {
-//         tabla.innerHTML = '';
-//         snap.forEach(child => renderFila(child.key, child.val()));
-//     });
-// };
+function avisar(mensaje, tipo = 'success') {
+    const contenedor = $('#avisos');
+    const el = document.createElement('div');
+    el.className = `toast align-items-center text-bg-${tipo} border-0 show`;
+    el.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">${escapar(mensaje)}</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast"></button>
+        </div>`;
+    contenedor.appendChild(el);
+    setTimeout(() => el.remove(), 4500);
+}
 
-// // --- 2. GESTIÓN DE NODOS (EMPRESA / SUB / CAT) ---
+function precioLegible(precio) {
+    const n = parseFloat(precio);
+    if (!Number.isFinite(n) || n <= 0) return 'Consultar';
+    return `$${n.toLocaleString('es-MX', { minimumFractionDigits: 2 })}`;
+}
 
-// window.adminNodo = async (nivel, accion) => {
-//     let path = '', parentId = '', el = null;
+function fechaLegible(iso) {
+    if (!iso) return '--';
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime()) ? '--' : d.toLocaleDateString('es-MX', {
+        year: 'numeric', month: 'short', day: 'numeric'
+    });
+}
 
-//     if (nivel === 'empresa') {
-//         path = 'nombres_empresa';
-//         el = selEmp;
-//     } else if (nivel === 'submarca') {
-//         if (!selEmp.value) return alert("Selecciona una empresa");
-//         path = `nombres_submarca/${selEmp.value}`;
-//         el = selSub;
-//     } else {
-//         if (!selSub.value) return alert("Selecciona una submarca");
-//         path = `nombres_categoria/${selSub.value}`;
-//         el = selCat;
-//     }
+// --- NAVEGACION ENTRE VISTAS ---
 
-//     if (accion === 'crear') {
-//         const n = prompt(`Nombre de la nueva ${nivel}:`);
-//         if (n) push(ref(db, path), { nombre: n });
-//     } else {
-//         if (!el.value) return alert("Selecciona un elemento");
-//         const n = prompt("Nuevo nombre:", "Cargando...");
-//         if (n) update(ref(db, `${path}/${el.value}`), { nombre: n });
-//     }
-// };
+function activarVista(nombre) {
+    $$('.vista').forEach((v) => v.classList.toggle('activa', v.dataset.vista === nombre));
+    $$('.sidebar .nav-link').forEach((a) => a.classList.toggle('activo', a.dataset.vista === nombre));
+}
 
-// // --- 3. CRUD DE PRODUCTOS ---
-
-// window.abrirModalProd = () => {
-//     document.getElementById('form-prod').reset();
-//     document.getElementById('p-id').value = '';
-//     new bootstrap.Modal(document.getElementById('modalProd')).show();
-// };
-
-// document.getElementById('form-prod').onsubmit = (e) => {
-//     e.preventDefault();
-//     const id = document.getElementById('p-id').value;
-//     const data = {
-//         nombre: document.getElementById('p-nombre').value,
-//         precio: document.getElementById('p-precio').value,
-//         stock: document.getElementById('p-stock').value,
-//         oferta: document.getElementById('p-oferta').checked
-//     };
-//     const path = `data_productos/${selCat.value}`;
-    
-//     if (!id) push(ref(db, path), data);
-//     else update(ref(db, `${path}/${id}`), data);
-
-//     bootstrap.Modal.getInstance(document.getElementById('modalProd')).hide();
-// };
-
-// window.prepararEdit = (id, p) => {
-//     document.getElementById('p-id').value = id;
-//     document.getElementById('p-nombre').value = p.nombre;
-//     document.getElementById('p-precio').value = p.precio;
-//     document.getElementById('p-stock').value = p.stock;
-//     document.getElementById('p-oferta').checked = p.oferta;
-//     new bootstrap.Modal(document.getElementById('modalProd')).show();
-// };
-
-// window.eliminarProd = (id) => {
-//     if (confirm("¿Eliminar producto?")) remove(ref(db, `data_productos/${selCat.value}/${id}`));
-// };
-
-// // --- HELPERS ---
-
-// function llenarSelect(el, data) {
-//     el.innerHTML = '<option value="">-- Seleccionar --</option>';
-//     if (data) Object.entries(data).forEach(([id, val]) => {
-//         el.innerHTML += `<option value="${id}">${val.nombre}</option>`;
-//     });
-// }
-
-// function resetSelects(keys) {
-//     if (keys.includes('sub')) selSub.innerHTML = '';
-//     if (keys.includes('cat')) selCat.innerHTML = '';
-//     tabla.innerHTML = '';
-//     btnAddProd.disabled = true;
-// }
-
-// function renderFila(id, p) {
-//     tabla.innerHTML += `
-//         <tr>
-//             <td class="ps-4"><b>${p.nombre}</b></td>
-//             <td>$${p.precio}</td>
-//             <td>${p.stock}</td>
-//             <td>${p.oferta ? '<span class="badge badge-oferta">OFERTA</span>' : 'Normal'}</td>
-//             <td class="text-end pe-4">
-//                 <button class="btn btn-sm btn-light" onclick='window.prepararEdit("${id}", ${JSON.stringify(p)})'><i class="bi bi-pencil"></i></button>
-//                 <button class="btn btn-sm btn-light text-danger" onclick="window.eliminarProd('${id}')"><i class="bi bi-trash"></i></button>
-//             </td>
-//         </tr>`;
-// }
-import { db } from '../firebase.js';
-import { ref, push, onValue, remove, update, set } 
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-// --- SELECTORES DEL DOM ---
-const selEmp = document.getElementById('sel-empresa');
-const selSub = document.getElementById('sel-submarca');
-const selCat = document.getElementById('sel-categoria');
-const tabla = document.getElementById('tabla-prods');
-const btnAddProd = document.getElementById('btn-nuevo-prod');
-const formProd = document.getElementById('form-prod');
-
-// Variables para controlar los listeners activos y evitar fugas de memoria
-let listenerSub = null;
-let listenerCat = null;
-let listenerProd = null;
-
-// --- 1. CARGA DE ESTRUCTURA RELACIONADA ---
-
-// Nivel 1: Cargar Empresas (Raíz)
-onValue(ref(db, 'nombres_empresa'), (snap) => {
-    llenarSelect(selEmp, snap.val());
+$$('.sidebar .nav-link[data-vista]').forEach((enlace) => {
+    enlace.addEventListener('click', (e) => {
+        e.preventDefault();
+        activarVista(enlace.dataset.vista);
+    });
 });
 
-// Nivel 2: Cargar Submarcas FILTRADAS por Empresa
-selEmp.onchange = () => {
-    const empId = selEmp.value;
-    resetSelects(['sub', 'cat']);
-    
-    if (!empId) return;
+// --- CATALOGO: ARBOL Y SELECTORES ---
 
-    // Ruta específica: submarcas pertenecen a ESTA empresa
-    const pathSub = `relacion_empresa_submarca/${empId}`;
-    onValue(ref(db, pathSub), (snap) => {
-        llenarSelect(selSub, snap.val());
+const selEmp = $('#sel-empresa');
+const selSub = $('#sel-submarca');
+const selCat = $('#sel-categoria');
+const tablaProds = $('#tabla-prods');
+const btnNuevoProd = $('#btn-nuevo-prod');
+const buscarProd = $('#buscar-prod');
+
+function llenarSelect(el, datos, textoVacio = '-- Seleccionar --') {
+    const previo = el.value;
+    el.innerHTML = `<option value="">${textoVacio}</option>`;
+    Object.entries(datos || {}).forEach(([id, val]) => {
+        const opt = document.createElement('option');
+        opt.value = id;
+        opt.textContent = val.nombre || '(sin nombre)';
+        el.appendChild(opt);
     });
-};
+    if ([...el.options].some((o) => o.value === previo)) el.value = previo;
+}
 
-// Nivel 3: Cargar Categorías FILTRADAS por Submarca
-selSub.onchange = () => {
-    const subId = selSub.value;
-    resetSelects(['cat']);
-    
-    if (!subId) return;
+async function cargarArbol() {
+    const [emp, sub, cat, prod] = await Promise.all([
+        get(ref(db, 'nombres_empresa')),
+        get(ref(db, 'relacion_empresa_submarca')),
+        get(ref(db, 'relacion_submarca_categoria')),
+        get(ref(db, 'data_productos'))
+    ]);
+    arbol = {
+        empresas: emp.exists() ? emp.val() : {},
+        submarcas: sub.exists() ? sub.val() : {},
+        categorias: cat.exists() ? cat.val() : {},
+        productos: prod.exists() ? prod.val() : {}
+    };
+    llenarSelect(selEmp, arbol.empresas, '-- Todas --');
+}
 
-    // Ruta específica: categorías pertenecen a ESTA submarca
-    const pathCat = `relacion_submarca_categoria/${subId}`;
-    onValue(ref(db, pathCat), (snap) => {
-        llenarSelect(selCat, snap.val());
+selEmp.addEventListener('change', () => {
+    selSub.innerHTML = '<option value="">-- Seleccionar --</option>';
+    selCat.innerHTML = '<option value="">-- Seleccionar --</option>';
+    limpiarTablaProductos();
+    if (selEmp.value) llenarSelect(selSub, arbol.submarcas[selEmp.value]);
+});
+
+selSub.addEventListener('change', () => {
+    selCat.innerHTML = '<option value="">-- Seleccionar --</option>';
+    limpiarTablaProductos();
+    if (selSub.value) llenarSelect(selCat, arbol.categorias[selSub.value]);
+});
+
+selCat.addEventListener('change', () => escucharProductos(selCat.value));
+
+function limpiarTablaProductos() {
+    if (cancelarEscuchaProd) {
+        cancelarEscuchaProd();
+        cancelarEscuchaProd = null;
+    }
+    productosVista = [];
+    tablaProds.innerHTML = '';
+    btnNuevoProd.disabled = true;
+    buscarProd.disabled = true;
+    buscarProd.value = '';
+    $('#conteo-prods').textContent = '';
+}
+
+function escucharProductos(catId) {
+    limpiarTablaProductos();
+    if (!catId) return;
+
+    btnNuevoProd.disabled = false;
+    buscarProd.disabled = false;
+
+    cancelarEscuchaProd = onValue(ref(db, `data_productos/${catId}`), (snap) => {
+        productosVista = [];
+        snap.forEach((hijo) => {
+            productosVista.push({ id: hijo.key, ...hijo.val() });
+        });
+        arbol.productos[catId] = snap.exists() ? snap.val() : {};
+        pintarProductos();
     });
-};
+}
 
-// Nivel 4: Cargar Productos de la Categoría seleccionada
-selCat.onchange = () => {
-    const catId = selCat.value;
-    if (!catId) {
-        btnAddProd.disabled = true;
-        tabla.innerHTML = '';
+function pintarProductos() {
+    const filtro = buscarProd.value.trim().toLowerCase();
+    const lista = filtro
+        ? productosVista.filter((p) => (p.nombre || '').toLowerCase().includes(filtro))
+        : productosVista;
+
+    $('#conteo-prods').textContent = filtro
+        ? `(${lista.length} de ${productosVista.length})`
+        : `(${productosVista.length})`;
+
+    if (!lista.length) {
+        tablaProds.innerHTML = `
+            <tr><td colspan="6" class="text-center text-muted py-5">
+                ${filtro ? 'Ningun producto coincide con la busqueda.' : 'Esta categoria no tiene productos.'}
+            </td></tr>`;
         return;
     }
-    btnAddProd.disabled = false;
-    
-    const pathProds = `data_productos/${catId}`;
-    onValue(ref(db, pathProds), (snap) => {
-        tabla.innerHTML = '';
-        if (snap.exists()) {
-            snap.forEach(child => renderFila(child.key, child.val()));
+
+    tablaProds.innerHTML = lista.map((p) => {
+        const imagen = imagenDeProducto(mapeoImagenes, p.id, p);
+        const entrada = mapeoImagenes[p.id];
+        const generica = imagen === IMAGEN_POR_DEFECTO;
+        const etiquetaImg = generica
+            ? '<span class="badge bg-warning text-dark">sin imagen</span>'
+            : (entrada && entrada.manual ? '<span class="badge bg-info text-dark">fijada</span>' : '');
+
+        return `
+            <tr>
+                <td class="ps-4">
+                    <img src="${escapar(imagen)}" class="miniatura" alt="" loading="lazy">
+                </td>
+                <td>
+                    <div class="fw-semibold">${escapar(p.nombre)}</div>
+                    <div class="d-flex gap-2 align-items-center mt-1">
+                        <small class="text-muted" style="font-size:.7rem;">REF ${escapar(p.id.substring(0, 8))}</small>
+                        ${etiquetaImg}
+                        ${p.descripcion ? '' : '<span class="badge bg-light text-muted border">sin descripcion</span>'}
+                    </div>
+                </td>
+                <td>${escapar(precioLegible(p.precio))}</td>
+                <td>${escapar(p.stock ?? '--')}</td>
+                <td>${p.oferta
+                    ? '<span class="badge bg-danger">Oferta</span>'
+                    : '<span class="badge bg-light text-secondary border">Normal</span>'}</td>
+                <td class="text-end pe-4">
+                    <button class="btn btn-sm btn-outline-primary me-1" data-editar="${escapar(p.id)}">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" data-borrar="${escapar(p.id)}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>`;
+    }).join('');
+}
+
+buscarProd.addEventListener('input', pintarProductos);
+
+tablaProds.addEventListener('click', (e) => {
+    const editar = e.target.closest('[data-editar]');
+    const borrar = e.target.closest('[data-borrar]');
+    if (editar) abrirModalProducto(editar.dataset.editar);
+    if (borrar) eliminarProducto(borrar.dataset.borrar);
+});
+
+// --- CATALOGO: NODOS (EMPRESA / SUBMARCA / CATEGORIA) ---
+
+function rutaNodo(nivel) {
+    if (nivel === 'empresa') return { path: 'nombres_empresa', el: selEmp, etiqueta: 'empresa' };
+    if (nivel === 'submarca') {
+        if (!selEmp.value) return null;
+        return { path: `relacion_empresa_submarca/${selEmp.value}`, el: selSub, etiqueta: 'submarca' };
+    }
+    if (!selSub.value) return null;
+    return { path: `relacion_submarca_categoria/${selSub.value}`, el: selCat, etiqueta: 'categoria' };
+}
+
+// Contar lo que cuelga de un nodo antes de borrarlo evita sorpresas: al quitar
+// una empresa desaparecen tambien sus submarcas, categorias y productos.
+function contarDescendientes(nivel, id) {
+    if (nivel === 'categoria') {
+        return { categorias: 1, productos: Object.keys(arbol.productos[id] || {}).length };
+    }
+    if (nivel === 'submarca') {
+        const cats = Object.keys(arbol.categorias[id] || {});
+        return {
+            categorias: cats.length,
+            productos: cats.reduce((n, c) => n + Object.keys(arbol.productos[c] || {}).length, 0)
+        };
+    }
+    const subs = Object.keys(arbol.submarcas[id] || {});
+    let categorias = 0;
+    let productos = 0;
+    for (const s of subs) {
+        const cats = Object.keys(arbol.categorias[s] || {});
+        categorias += cats.length;
+        productos += cats.reduce((n, c) => n + Object.keys(arbol.productos[c] || {}).length, 0);
+    }
+    return { submarcas: subs.length, categorias, productos };
+}
+
+async function eliminarNodo(nivel, destino) {
+    const id = destino.el.value;
+    const nombre = destino.el.options[destino.el.selectedIndex].text;
+    const cuenta = contarDescendientes(nivel, id);
+
+    const detalle = [
+        cuenta.submarcas ? `${cuenta.submarcas} submarca(s)` : '',
+        cuenta.categorias ? `${cuenta.categorias} categoria(s)` : '',
+        cuenta.productos ? `${cuenta.productos} producto(s)` : ''
+    ].filter(Boolean).join(', ');
+
+    const mensaje = `Se eliminara "${nombre}"`
+        + (detalle ? ` y con ella ${detalle}.` : '.')
+        + '\n\nEsta accion no se puede deshacer. Escribe ELIMINAR para confirmar.';
+
+    if (prompt(mensaje) !== 'ELIMINAR') return;
+
+    const borrados = [remove(ref(db, `${destino.path}/${id}`))];
+
+    if (nivel === 'categoria') {
+        borrados.push(remove(ref(db, `data_productos/${id}`)));
+    } else if (nivel === 'submarca') {
+        for (const c of Object.keys(arbol.categorias[id] || {})) {
+            borrados.push(remove(ref(db, `data_productos/${c}`)));
+        }
+        borrados.push(remove(ref(db, `relacion_submarca_categoria/${id}`)));
+    } else {
+        for (const s of Object.keys(arbol.submarcas[id] || {})) {
+            for (const c of Object.keys(arbol.categorias[s] || {})) {
+                borrados.push(remove(ref(db, `data_productos/${c}`)));
+            }
+            borrados.push(remove(ref(db, `relacion_submarca_categoria/${s}`)));
+        }
+        borrados.push(remove(ref(db, `relacion_empresa_submarca/${id}`)));
+    }
+
+    await Promise.all(borrados);
+    avisar(`${destino.etiqueta} eliminada`);
+    await recargarTodo();
+}
+
+$$('[data-nodo]').forEach((boton) => {
+    boton.addEventListener('click', async () => {
+        const nivel = boton.dataset.nodo;
+        const accion = boton.dataset.accion;
+        const destino = rutaNodo(nivel);
+
+        if (!destino) {
+            avisar(nivel === 'submarca'
+                ? 'Selecciona primero una empresa'
+                : 'Selecciona primero una submarca', 'warning');
+            return;
+        }
+
+        try {
+            if (accion === 'crear') {
+                const nombre = prompt(`Nombre de la nueva ${destino.etiqueta}:`);
+                if (!nombre || !nombre.trim()) return;
+                await set(push(ref(db, destino.path)), { nombre: nombre.trim() });
+                avisar(`${destino.etiqueta} creada`);
+                await recargarTodo();
+                return;
+            }
+
+            if (!destino.el.value) {
+                avisar(`Selecciona una ${destino.etiqueta}`, 'warning');
+                return;
+            }
+
+            if (accion === 'editar') {
+                const actual = destino.el.options[destino.el.selectedIndex].text;
+                const nombre = prompt(`Nuevo nombre de la ${destino.etiqueta}:`, actual);
+                if (!nombre || !nombre.trim() || nombre === actual) return;
+                await update(ref(db, `${destino.path}/${destino.el.value}`), { nombre: nombre.trim() });
+                avisar('Nombre actualizado');
+                await recargarTodo();
+                return;
+            }
+
+            if (accion === 'eliminar') await eliminarNodo(nivel, destino);
+        } catch (e) {
+            avisar(`No se pudo completar: ${e.message}`, 'danger');
         }
     });
-};
+});
 
-// --- 2. GESTIÓN DE NODOS (CREAR / EDITAR CON RELACIÓN) ---
+// --- CATALOGO: PRODUCTOS ---
 
-window.adminNodo = async (nivel, accion) => {
-    let path = '';
-    let el = null;
-    let nombreNivel = '';
-
-    if (nivel === 'empresa') {
-        path = 'nombres_empresa';
-        el = selEmp;
-        nombreNivel = 'Empresa';
-    } else if (nivel === 'submarca') {
-        if (!selEmp.value) return alert("Selecciona una Empresa primero");
-        path = `relacion_empresa_submarca/${selEmp.value}`;
-        el = selSub;
-        nombreNivel = 'Submarca';
-    } else if (nivel === 'categoria') {
-        if (!selSub.value) return alert("Selecciona una Submarca primero");
-        path = `relacion_submarca_categoria/${selSub.value}`;
-        el = selCat;
-        nombreNivel = 'Categoría';
-    }
-
-    if (accion === 'crear') {
-        const n = prompt(`Nombre de la nueva ${nombreNivel}:`);
-        if (n && n.trim() !== "") {
-            const nuevoRef = push(ref(db, path));
-            set(nuevoRef, { nombre: n.trim() });
-        }
-    } else if (accion === 'editar') {
-        if (!el.value) return alert(`Selecciona una ${nombreNivel} para editar`);
-        const nombreActual = el.options[el.selectedIndex].text;
-        const n = prompt(`Editar nombre de ${nombreNivel}:`, nombreActual);
-        if (n && n.trim() !== "" && n !== nombreActual) {
-            update(ref(db, `${path}/${el.value}`), { nombre: n.trim() });
+function listaCategoriasPlana() {
+    const salida = [];
+    for (const [idEmp, emp] of Object.entries(arbol.empresas)) {
+        for (const idSub of Object.keys(arbol.submarcas[idEmp] || {})) {
+            const sub = arbol.submarcas[idEmp][idSub];
+            for (const [idCat, cat] of Object.entries(arbol.categorias[idSub] || {})) {
+                salida.push({
+                    id: idCat,
+                    etiqueta: `${emp.nombre} / ${sub.nombre} / ${cat.nombre}`
+                });
+            }
         }
     }
-};
+    return salida.sort((a, b) => a.etiqueta.localeCompare(b.etiqueta));
+}
 
-// --- 3. CRUD DE PRODUCTOS ---
+function actualizarVistaPreviaImagen() {
+    const carpeta = $('#p-imagen-carpeta').value.trim();
+    const preview = $('#p-preview');
+    const origen = $('#p-origen-imagen');
 
-window.abrirModalProd = () => {
-    formProd.reset();
-    document.getElementById('p-id').value = '';
-    const modal = new bootstrap.Modal(document.getElementById('modalProd'));
-    modal.show();
-};
+    if (carpeta && indiceImagenes[carpeta] && indiceImagenes[carpeta].length) {
+        preview.src = `img/productos/${carpeta}/${indiceImagenes[carpeta][0]}`;
+        origen.innerHTML = `<span class="text-info">Imagen fijada a mano</span>
+            &middot; ${indiceImagenes[carpeta].length} foto(s)`;
+        return;
+    }
 
-formProd.onsubmit = (e) => {
+    if (carpeta) {
+        preview.src = IMAGEN_POR_DEFECTO;
+        origen.innerHTML = '<span class="text-danger">Esa carpeta no existe</span>';
+        return;
+    }
+
+    const id = $('#p-id').value;
+    const entrada = id ? mapeoImagenes[id] : null;
+    if (entrada) {
+        preview.src = entrada.imagen;
+        origen.innerHTML = `Automatica &middot; <code class="small">${escapar(entrada.carpeta)}</code>`;
+    } else {
+        preview.src = IMAGEN_POR_DEFECTO;
+        origen.innerHTML = '<span class="text-warning">Sin imagen asociada</span>';
+    }
+}
+
+$('#p-imagen-carpeta').addEventListener('input', actualizarVistaPreviaImagen);
+$('#btn-imagen-auto').addEventListener('click', () => {
+    $('#p-imagen-carpeta').value = '';
+    actualizarVistaPreviaImagen();
+});
+
+function abrirModalProducto(id) {
+    const producto = id ? productosVista.find((p) => p.id === id) : null;
+
+    $('#titulo-modal-prod').textContent = producto ? 'Editar producto' : 'Nuevo producto';
+    $('#p-id').value = producto ? producto.id : '';
+    $('#p-nombre').value = producto ? (producto.nombre || '') : '';
+    $('#p-descripcion').value = producto ? (producto.descripcion || '') : '';
+    $('#p-marca').value = producto ? (producto.marca || '') : '';
+    $('#p-modelo').value = producto ? (producto.modelo || '') : '';
+    $('#p-precio').value = producto ? (producto.precio ?? '') : '0';
+    $('#p-stock').value = producto ? (producto.stock ?? '') : '1';
+    $('#p-oferta').checked = producto ? Boolean(producto.oferta) : false;
+    $('#p-imagen-carpeta').value = producto ? (producto.imagenCarpeta || '') : '';
+
+    const selector = $('#p-categoria');
+    selector.innerHTML = listaCategoriasPlana()
+        .map((c) => `<option value="${escapar(c.id)}">${escapar(c.etiqueta)}</option>`)
+        .join('');
+    selector.value = selCat.value;
+
+    actualizarVistaPreviaImagen();
+    new bootstrap.Modal($('#modalProd')).show();
+}
+
+btnNuevoProd.addEventListener('click', () => abrirModalProducto(null));
+
+$('#form-prod').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const id = document.getElementById('p-id').value;
-    const catId = selCat.value;
+    const id = $('#p-id').value;
+    const categoriaOrigen = selCat.value;
+    const categoriaDestino = $('#p-categoria').value;
 
-    const data = {
-        nombre: document.getElementById('p-nombre').value,
-        precio: document.getElementById('p-precio').value,
-        stock: document.getElementById('p-stock').value,
-        oferta: document.getElementById('p-oferta').checked
+    const datos = {
+        nombre: $('#p-nombre').value.trim(),
+        descripcion: $('#p-descripcion').value.trim(),
+        marca: $('#p-marca').value.trim(),
+        modelo: $('#p-modelo').value.trim(),
+        precio: $('#p-precio').value.trim(),
+        stock: $('#p-stock').value.trim(),
+        oferta: $('#p-oferta').checked,
+        imagenCarpeta: $('#p-imagen-carpeta').value.trim()
     };
 
-    // Los productos se guardan bajo la ID única de la categoría
-    const path = `data_productos/${catId}`;
-    
-    if (!id) {
-        push(ref(db, path), data);
-    } else {
-        update(ref(db, `${path}/${id}`), data);
+    try {
+        if (!id) {
+            await set(push(ref(db, `data_productos/${categoriaDestino}`)), datos);
+        } else if (categoriaDestino !== categoriaOrigen) {
+            // Mover conserva la misma clave para no invalidar enlaces guardados.
+            await set(ref(db, `data_productos/${categoriaDestino}/${id}`), datos);
+            await remove(ref(db, `data_productos/${categoriaOrigen}/${id}`));
+        } else {
+            await update(ref(db, `data_productos/${categoriaOrigen}/${id}`), datos);
+        }
+
+        bootstrap.Modal.getInstance($('#modalProd')).hide();
+        avisar('Producto guardado');
+        mapeoImagenes = await refrescarMapeoImagenes();
+        pintarProductos();
+        await recargarResumen();
+    } catch (err) {
+        avisar(`No se pudo guardar: ${err.message}`, 'danger');
+    }
+});
+
+async function eliminarProducto(id) {
+    const producto = productosVista.find((p) => p.id === id);
+    if (!confirm(`Eliminar "${producto ? producto.nombre : id}" definitivamente?`)) return;
+    try {
+        await remove(ref(db, `data_productos/${selCat.value}/${id}`));
+        avisar('Producto eliminado');
+        mapeoImagenes = await refrescarMapeoImagenes();
+        await recargarResumen();
+    } catch (e) {
+        avisar(`No se pudo eliminar: ${e.message}`, 'danger');
+    }
+}
+
+// --- CONTACTO ---
+
+function pintarFormularioContacto(valores) {
+    $('#campos-contacto').innerHTML = CAMPOS_CONTACTO.map((campo) => `
+        <div class="col-md-${campo.ancho || 6}">
+            <label class="form-label fw-bold small">${escapar(campo.etiqueta)}</label>
+            <input type="${campo.tipo}" class="form-control" data-campo="${escapar(campo.clave)}"
+                value="${escapar(valores[campo.clave] ?? '')}">
+            ${campo.ayuda ? `<div class="form-text">${escapar(campo.ayuda)}</div>` : ''}
+        </div>`).join('');
+}
+
+async function cargarContactoEnPanel() {
+    const snap = await get(ref(db, RUTA_CONFIG));
+    pintarFormularioContacto({ ...CONTACTO_POR_DEFECTO, ...(snap.exists() ? snap.val() : {}) });
+}
+
+$('#form-contacto').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const valores = {};
+    $$('#campos-contacto [data-campo]').forEach((input) => {
+        valores[input.dataset.campo] = input.value.trim();
+    });
+    try {
+        await set(ref(db, RUTA_CONFIG), valores);
+        $('#estado-contacto').innerHTML = '<span class="text-success">Guardado</span>';
+        avisar('Datos de contacto actualizados en todo el sitio');
+    } catch (err) {
+        avisar(`No se pudo guardar: ${err.message}`, 'danger');
+    }
+});
+
+$('#btn-restaurar-contacto').addEventListener('click', () => {
+    pintarFormularioContacto(CONTACTO_POR_DEFECTO);
+    $('#estado-contacto').innerHTML = '<span class="text-muted">Revisa y pulsa guardar</span>';
+});
+
+// --- USUARIOS ---
+
+function pintarUsuarios(usuarios) {
+    const filas = Object.entries(usuarios || {});
+    if (!filas.length) {
+        $('#tabla-usuarios').innerHTML =
+            '<tr><td colspan="5" class="text-center text-muted py-5">No hay usuarios registrados.</td></tr>';
+        return;
     }
 
-    bootstrap.Modal.getInstance(document.getElementById('modalProd')).hide();
-};
+    $('#tabla-usuarios').innerHTML = filas.map(([uid, u]) => {
+        const esYo = uid === admin.uid;
+        const activo = u.activo !== false;
+        return `
+            <tr>
+                <td class="ps-4">
+                    <div class="fw-semibold">${escapar(u.username || '(sin nombre)')}
+                        ${esYo ? '<span class="badge bg-secondary ms-1">tu cuenta</span>' : ''}</div>
+                    <small class="text-muted">${escapar(u.email || '')}</small>
+                </td>
+                <td>
+                    <select class="form-select form-select-sm" data-rol="${escapar(uid)}" ${esYo ? 'disabled' : ''}>
+                        <option value="usuario" ${u.role !== 'admin' ? 'selected' : ''}>Usuario</option>
+                        <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Administrador</option>
+                    </select>
+                </td>
+                <td>
+                    <span class="badge ${activo ? 'bg-success' : 'bg-secondary'}">
+                        ${activo ? 'Activo' : 'Desactivado'}
+                    </span>
+                </td>
+                <td class="small text-muted">${escapar(fechaLegible(u.lastLogin || u.createdAt))}</td>
+                <td class="text-end pe-4">
+                    <button class="btn btn-sm btn-outline-secondary me-1" data-reset="${escapar(u.email || '')}"
+                        title="Enviar correo para restablecer la contrasena">
+                        <i class="bi bi-envelope"></i>
+                    </button>
+                    <button class="btn btn-sm ${activo ? 'btn-outline-danger' : 'btn-outline-success'}"
+                        data-activo="${escapar(uid)}" data-valor="${activo ? 'false' : 'true'}"
+                        ${esYo ? 'disabled' : ''}
+                        title="${activo ? 'Desactivar' : 'Activar'}">
+                        <i class="bi ${activo ? 'bi-person-slash' : 'bi-person-check'}"></i>
+                    </button>
+                </td>
+            </tr>`;
+    }).join('');
+}
 
-window.prepararEdit = (id, p) => {
-    document.getElementById('p-id').value = id;
-    document.getElementById('p-nombre').value = p.nombre;
-    document.getElementById('p-precio').value = p.precio;
-    document.getElementById('p-stock').value = p.stock;
-    document.getElementById('p-oferta').checked = p.oferta;
-    
-    const modal = new bootstrap.Modal(document.getElementById('modalProd'));
-    modal.show();
-};
-
-window.eliminarProd = (id) => {
-    if (confirm("¿Eliminar este producto definitivamente?")) {
-        remove(ref(db, `data_productos/${selCat.value}/${id}`));
+$('#tabla-usuarios').addEventListener('change', async (e) => {
+    const select = e.target.closest('[data-rol]');
+    if (!select) return;
+    try {
+        await update(ref(db, `users/${select.dataset.rol}`), { role: select.value });
+        avisar('Rol actualizado');
+    } catch (err) {
+        avisar(`No se pudo cambiar el rol: ${err.message}`, 'danger');
     }
-};
+});
 
-// --- HELPERS ---
+$('#tabla-usuarios').addEventListener('click', async (e) => {
+    const reset = e.target.closest('[data-reset]');
+    const alternar = e.target.closest('[data-activo]');
 
-function llenarSelect(el, data) {
-    const valPrevio = el.value; // Guardar selección si existe
-    el.innerHTML = '<option value="">-- Seleccionar --</option>';
-    if (data) {
-        Object.entries(data).forEach(([id, val]) => {
-            const opt = document.createElement('option');
-            opt.value = id;
-            opt.textContent = val.nombre;
-            el.appendChild(opt);
+    if (reset) {
+        const correo = reset.dataset.reset;
+        if (!correo) return avisar('Ese usuario no tiene correo registrado', 'warning');
+        try {
+            await sendPasswordResetEmail(auth, correo);
+            avisar(`Correo de restablecimiento enviado a ${correo}`);
+        } catch (err) {
+            avisar(`No se pudo enviar: ${err.message}`, 'danger');
+        }
+    }
+
+    if (alternar) {
+        try {
+            await update(ref(db, `users/${alternar.dataset.activo}`), {
+                activo: alternar.dataset.valor === 'true'
+            });
+            avisar('Estado actualizado');
+        } catch (err) {
+            avisar(`No se pudo actualizar: ${err.message}`, 'danger');
+        }
+    }
+});
+
+$('#btn-nuevo-usuario').addEventListener('click', () => {
+    $('#form-usuario').reset();
+    $('#error-usuario').classList.add('d-none');
+    new bootstrap.Modal($('#modalUsuario')).show();
+});
+
+$('#form-usuario').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const error = $('#error-usuario');
+    error.classList.add('d-none');
+
+    // Crear la cuenta con la instancia principal dejaria al administrador
+    // dentro de la sesion del usuario recien creado. Una segunda instancia
+    // aislada evita ese efecto.
+    const appAlta = initializeApp(firebaseConfig, `alta-${Date.now()}`);
+    const authAlta = getAuth(appAlta);
+
+    try {
+        const credencial = await createUserWithEmailAndPassword(
+            authAlta, $('#u-email').value.trim(), $('#u-pass').value
+        );
+        await set(ref(db, `users/${credencial.user.uid}`), {
+            username: $('#u-nombre').value.trim(),
+            email: $('#u-email').value.trim(),
+            role: $('#u-rol').value,
+            activo: true,
+            createdAt: new Date().toISOString()
         });
+        bootstrap.Modal.getInstance($('#modalUsuario')).hide();
+        avisar('Usuario creado');
+    } catch (err) {
+        error.textContent = err.message;
+        error.classList.remove('d-none');
+    } finally {
+        await signOut(authAlta).catch(() => {});
+        await deleteApp(appAlta).catch(() => {});
     }
-    el.value = valPrevio; // Intentar restaurar
+});
+
+// --- RESUMEN ---
+
+function tarjetaKpi(valor, etiqueta, icono) {
+    return `
+        <div class="col-6 col-lg-3">
+            <div class="card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="kpi">${valor}</div>
+                        <div class="nav-label mt-1">${etiqueta}</div>
+                    </div>
+                    <i class="bi ${icono} fs-4 text-secondary opacity-50"></i>
+                </div>
+            </div>
+        </div>`;
 }
 
-function resetSelects(keys) {
-    if (keys.includes('sub')) {
-        selSub.innerHTML = '<option value="">-- Seleccionar --</option>';
+async function recargarResumen() {
+    const todosProductos = [];
+    for (const [idCat, productos] of Object.entries(arbol.productos)) {
+        for (const [id, p] of Object.entries(productos || {})) {
+            todosProductos.push({ id, categoria: idCat, ...p });
+        }
     }
-    if (keys.includes('cat')) {
-        selCat.innerHTML = '<option value="">-- Seleccionar --</option>';
+
+    let totalSubmarcas = 0;
+    Object.values(arbol.submarcas).forEach((s) => { totalSubmarcas += Object.keys(s || {}).length; });
+    let totalCategorias = 0;
+    Object.values(arbol.categorias).forEach((c) => { totalCategorias += Object.keys(c || {}).length; });
+
+    let usuarios = {};
+    try {
+        const snap = await get(ref(db, 'users'));
+        if (snap.exists()) usuarios = snap.val();
+    } catch (e) {
+        usuarios = {};
     }
-    tabla.innerHTML = '';
-    btnAddProd.disabled = true;
+    pintarUsuarios(usuarios);
+
+    $('#kpis').innerHTML = [
+        tarjetaKpi(Object.keys(arbol.empresas).length, 'Empresas', 'bi-building'),
+        tarjetaKpi(totalCategorias, 'Categorias', 'bi-tags'),
+        tarjetaKpi(todosProductos.length, 'Productos', 'bi-box-seam'),
+        tarjetaKpi(Object.keys(usuarios).length, 'Usuarios', 'bi-people')
+    ].join('');
+
+    const sinImagen = todosProductos.filter((p) => !mapeoImagenes[p.id]);
+    const sinDescripcion = todosProductos.filter((p) => !p.descripcion);
+    const sinPrecio = todosProductos.filter((p) => !(parseFloat(p.precio) > 0));
+    const sinStock = todosProductos.filter((p) => !(parseInt(p.stock, 10) > 0));
+
+    const linea = (n, total, texto, tipo) => {
+        const pct = total ? Math.round((n / total) * 100) : 0;
+        return `
+            <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <span>${texto}</span>
+                    <span class="fw-semibold">${n} <span class="text-muted fw-normal">(${pct}%)</span></span>
+                </div>
+                <div class="progress mt-1" style="height:6px;">
+                    <div class="progress-bar bg-${tipo}" style="width:${pct}%"></div>
+                </div>
+            </div>`;
+    };
+
+    const total = todosProductos.length;
+    $('#salud-catalogo').innerHTML = total ? [
+        linea(sinImagen.length, total, 'Productos sin imagen asociada', 'warning'),
+        linea(sinDescripcion.length, total, 'Productos sin descripcion', 'info'),
+        linea(sinPrecio.length, total, 'Productos con precio a consultar', 'secondary'),
+        linea(sinStock.length, total, 'Productos sin stock', 'danger'),
+        `<div class="text-muted mt-3" style="font-size:.82rem;">
+            La imagen se asigna sola a partir del nombre del producto; puedes fijar otra
+            desde la ficha de cada uno.
+        </div>`
+    ].join('') : '<span class="text-muted">Todavia no hay productos.</span>';
+
+    const porEmpresa = Object.entries(arbol.empresas).map(([idEmp, emp]) => {
+        let n = 0;
+        for (const idSub of Object.keys(arbol.submarcas[idEmp] || {})) {
+            for (const idCat of Object.keys(arbol.categorias[idSub] || {})) {
+                n += Object.keys(arbol.productos[idCat] || {}).length;
+            }
+        }
+        return { nombre: emp.nombre, n };
+    }).sort((a, b) => b.n - a.n);
+
+    const mayor = Math.max(1, ...porEmpresa.map((e) => e.n));
+    $('#reparto-empresas').innerHTML = porEmpresa.map((e) => `
+        <div class="mb-3">
+            <div class="d-flex justify-content-between">
+                <span>${escapar(e.nombre)}</span>
+                <span class="fw-semibold">${e.n}</span>
+            </div>
+            <div class="progress mt-1" style="height:6px;">
+                <div class="progress-bar" style="width:${Math.round((e.n / mayor) * 100)}%"></div>
+            </div>
+        </div>`).join('') || '<span class="text-muted">Sin empresas registradas.</span>';
 }
 
-function renderFila(id, p) {
-    const fila = document.createElement('tr');
-    fila.innerHTML = `
-        <td class="ps-4">
-            <div class="fw-bold">${p.nombre}</div>
-            <small class="text-muted" style="font-size: 0.7rem;">REF: ${id.substring(0,8)}</small>
-        </td>
-        <td>$${parseFloat(p.precio).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-        <td>${p.stock}</td>
-        <td>
-            ${p.oferta 
-                ? '<span class="badge bg-danger">OFERTA</span>' 
-                : '<span class="badge bg-secondary opacity-50">Normal</span>'}
-        </td>
-        <td class="text-end pe-4">
-            <button class="btn btn-sm btn-outline-primary me-1" onclick='window.prepararEdit("${id}", ${JSON.stringify(p)})'>
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-danger" onclick="window.eliminarProd('${id}')">
-                <i class="bi bi-trash"></i>
-            </button>
-        </td>
-    `;
-    tabla.appendChild(fila);
+async function recargarTodo() {
+    await cargarArbol();
+    await recargarResumen();
 }
+
+// --- ARRANQUE ---
+
+$('#btn-salir').addEventListener('click', () => {
+    signOut(auth).then(() => { window.location.href = 'login.html'; });
+});
+
+(async function iniciar() {
+    admin = await exigirAdmin('login.html');
+    $('#admin-email').textContent = admin.email;
+
+    [indiceImagenes, mapeoImagenes] = await Promise.all([
+        cargarIndiceImagenes(),
+        cargarMapeoImagenes()
+    ]);
+
+    $('#lista-carpetas').innerHTML = Object.keys(indiceImagenes)
+        .sort()
+        .map((c) => `<option value="${escapar(c)}"></option>`)
+        .join('');
+
+    await cargarArbol();
+    await cargarContactoEnPanel();
+    await recargarResumen();
+
+    // Mantener la lista de usuarios al dia mientras el panel esta abierto.
+    onValue(ref(db, 'users'), (snap) => {
+        if (admin) pintarUsuarios(snap.exists() ? snap.val() : {});
+    }, () => { /* sin permisos de lectura: la tabla queda como estaba */ });
+})();
